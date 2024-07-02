@@ -10,7 +10,17 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+int MAXLINE = 1024;
+char prompt[] = "minishell $ ";
+
 int main(int ac, char **av)
 {
+    char cmdline[MAXLINE]; //buffer for commands
+
+    while (1) // exit the shell when receiving ctrl-D, or with command 'exit'
+    {
+        ft_printf("%s", prompt);
+        // read commandline
+    }
     return (0);
 }

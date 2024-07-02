@@ -1,4 +1,9 @@
-Prompt: What should be there? What should be showed? 'Minishell'?
+minishell subject: https://gitlab.com/madebypixel02/minishell/-/blob/main/en.subject.pdf?ref_type=heads
+bash documentation: https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.pdf
+
+Project structure: lexer -> parser -> expander -> executor
+
+Prompt: What should b showed: 'minishell$'
 
 History: How to construct? With structs?
 
