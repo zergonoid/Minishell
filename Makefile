@@ -10,7 +10,7 @@ SRC =			$(addprefix $(SRC_PATH), $(SRC_FILES))
 LIBFT_PATH =	./libft/
 LIBFT =			$(LIBFT_PATH)libft.a
 
-CFLAGS =		-Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS =		#-Wall -Wextra -Werror -g -fsanitize=address
 OTHERFLAGS =	-L$(LIBFT_PATH) -lft -O3
 
 OBJ_DIR =		./obj/

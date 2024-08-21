@@ -5,6 +5,7 @@ SRCS = ft_isalpha.c \
 	ft_isalnum.c \
 	ft_isascii.c \
 	ft_isprint.c \
+	ft_isspace.c \
 	ft_strlen.c \
 	ft_memset.c \
 	ft_bzero.c \
@@ -34,6 +35,9 @@ SRCS = ft_isalpha.c \
 	ft_putstr_fd.c \
 	ft_putendl_fd.c \
 	ft_putnbr_fd.c \
+	./ft_printf/ft_functions.c \
+	./ft_printf/ft_functions1.c \
+	./ft_printf/ft_printf.c
 
 BONUS_SRCS = ft_lstnew.c \
 	ft_lstadd_front.c \
@@ -69,4 +73,3 @@ re: fclean all
 
 bonus: $(BONUS_OBJS) $(OBJS)
 	ar -crs $(NAME) $(BONUS_OBJS) $(OBJS)
-
