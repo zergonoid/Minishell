@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 11:01:56 by skioridi          #+#    #+#             */
-/*   Updated: 2024/08/21 17:16:51 by codespace        ###   ########.fr       */
+/*   Updated: 2024/08/21 17:36:25 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int main(int ac, char **av, char **envp)
     ssize_t r_no;
     int i = 0;
     r_no = 0;
-    //while (1) // exit the shell when receiving ctrl-D, or with command 'exit'
+    while (1) // exit the shell when receiving ctrl-D, or with command 'exit'
     {
         write(1, "minishell$", 11);
         //while (1)
@@ -30,7 +30,7 @@ int main(int ac, char **av, char **envp)
                     cmdline[i] = '\0';
                 i++;
             }
-            printf("%s %zu", cmdline, r_no);    
+            ft_printf("%s %i\n", cmdline, r_no);    
             // if(r_no == 0)
             //     break ;
         //}
