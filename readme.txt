@@ -1,0 +1,8 @@
+---
+microshell (?) / check videos on concepts 
+---
+
+Started with guide from this (https://harm-smits.github.io/42docs/projects/minishell), where it's suggested to work like this:
+Project structure: lexer -> parser -> expander -> executor
+
+lexer:
