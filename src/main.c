@@ -3,24 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skioridi <skioridi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 11:01:56 by skioridi          #+#    #+#             */
-/*   Updated: 2024/04/12 13:25:31 by skioridi         ###   ########.fr       */
+/*   Updated: 2024/08/21 17:16:51 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int MAXLINE = 1024;
-char prompt[] = "minishell $ ";
+#include "../header.h"
 
-int main(int ac, char **av)
+int main(int ac, char **av, char **envp)
 {
-    char cmdline[MAXLINE]; //buffer for commands
-
-    while (1) // exit the shell when receiving ctrl-D, or with command 'exit'
+    char cmdline[MAXLINE] = ""; //buffer for commands
+    ssize_t r_no;
+    int i = 0;
+    r_no = 0;
+    //while (1) // exit the shell when receiving ctrl-D, or with command 'exit'
     {
-        ft_printf("%s", prompt);
+        write(1, "minishell$", 11);
+        //while (1)
+        //{
+            r_no = read(0, cmdline, (size_t)MAXLINE);
+            while(cmdline[i])
+            {
+                if (cmdline[i] == '\n')
+                    cmdline[i] = '\0';
+                i++;
+            }
+            printf("%s %zu", cmdline, r_no);    
+            // if(r_no == 0)
+            //     break ;
+        //}
+        
         // read commandline
+        // QUIT CONDITIONS
     }
     return (0);
 }
