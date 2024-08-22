@@ -22,11 +22,13 @@
 #define MAXLINE 1024
 #define prompt "minishell$"
 
-typedef struct s_name
+int lexer(char *cmdline);
+
+typedef struct s_token
 {
-	int		content;
-	int 		index;
-	struct s_stack *next;
-	struct s_stack	*prev;
-}			t_name;
+	char		*content;
+	int 		type;
+	struct s_token *next;
+	struct s_token	*prev;
+}			t_token;
 

@@ -1,5 +1,5 @@
+.SILENT:
 NAME = libft.a
-
 SRCS = ft_isalpha.c \
 	ft_isdigit.c \
 	ft_isalnum.c \
@@ -35,10 +35,13 @@ SRCS = ft_isalpha.c \
 	ft_putstr_fd.c \
 	ft_putendl_fd.c \
 	ft_putnbr_fd.c \
-	./ft_printf/ft_functions.c \
-	./ft_printf/ft_functions1.c \
-	./ft_printf/ft_printf.c
-
+	ft_printf/ft_functions.c \
+	ft_printf/ft_functions1.c \
+	ft_printf/ft_printf.c \
+	get_next_line/get_next_line.c \
+	get_next_line/get_next_line_utils.c \
+	get_next_line/get_next_line_bonus.c \
+	get_next_line/get_next_line_utils_bonus.c
 BONUS_SRCS = ft_lstnew.c \
 	ft_lstadd_front.c \
 	ft_lstsize.c \
@@ -48,14 +51,13 @@ BONUS_SRCS = ft_lstnew.c \
 	ft_lstclear.c \
 	ft_lstiter.c \
 	ft_lstmap.c 
- 
 OBJS = $(SRCS:.c=.o)
 BONUS_OBJS = $(BONUS_SRCS:.c=.o)
 CFLAGS = -Wall -Werror -Wextra
 
 .PHONY: all clean fclean re bonus
 
-all: $(NAME)
+all: bonus
 
 %.o : %.c
 	cc $(CFLAGS) -c $< -o $@

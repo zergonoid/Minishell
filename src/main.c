@@ -24,7 +24,7 @@ int main(int ac, char **av, char **envp)
             line = readline("minishell$");
             if (line)
                 add_history(line);
-            ft_printf("%s\n", line);    
+            lexer(line);
             // read commandline
             // Quit when receiving SIGINT CTRL-C
             if (ft_strncmp(line, "exit", ft_strlen(line)) == 0)

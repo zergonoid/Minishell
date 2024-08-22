@@ -14,5 +14,6 @@
 
 int lexer(char *cmdline)
 {
-
+    ft_printf("%s\n", cmdline);
+    return (0);
 }

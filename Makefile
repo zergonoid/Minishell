@@ -4,14 +4,14 @@ CC = cc
 
 #libs
 SRC_PATH =		./src/
-SRC_FILES =		main.c 
+SRC_FILES =		main.c lexer.c
 SRC =			$(addprefix $(SRC_PATH), $(SRC_FILES))
 
 LIBFT_PATH =	./libft/
 LIBFT =			$(LIBFT_PATH)libft.a
 
 CFLAGS =		-Wall -Wextra -Werror -g -fsanitize=address
-OTHERFLAGS =	-L$(LIBFT_PATH) -lft -lreadline -O3
+OTHERFLAGS =	-L$(LIBFT_PATH) -lft -lreadline -lasan -O3
 
 OBJ_DIR =		./obj/
 OBJS =			$(SRC:$(SRC_PATH)%.c=$(OBJ_DIR)%.o)
@@ -20,6 +20,7 @@ OBJS =			$(SRC:$(SRC_PATH)%.c=$(OBJ_DIR)%.o)
 all: $(NAME)
 
 $(NAME): $(OBJS)
+	@make -C libft/ --silent
 	@$(CC) $(CFLAGS) $(OBJS) $(OTHERFLAGS) -o $(NAME)
 
 $(OBJ_DIR)%.o: $(SRC_PATH)%.c
@@ -27,11 +28,13 @@ $(OBJ_DIR)%.o: $(SRC_PATH)%.c
 	@$(CC) $(CFLAGS) $(INC_FLAGS) -c $< -o $@
 
 clean:
-	@rm -f $(OBJ_DIR)/*
-	@rmdir obj/
+	@rm -f $(OBJ_DIR)/* 
+	@rm -fd obj/
+	@make clean --silent -C libft/
 
 fclean: clean
-	@rm -f $(NAME)
+	@rm -f $(NAME) 
+	@make fclean --silent -C libft/
 
 re: fclean all 
 
