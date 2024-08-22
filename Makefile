@@ -20,7 +20,7 @@ OBJS =			$(SRC:$(SRC_PATH)%.c=$(OBJ_DIR)%.o)
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@make -C libft/ --silent
+	@make -sC libft/
 	@$(CC) $(CFLAGS) $(OBJS) $(OTHERFLAGS) -o $(NAME)
 
 $(OBJ_DIR)%.o: $(SRC_PATH)%.c
@@ -30,11 +30,11 @@ $(OBJ_DIR)%.o: $(SRC_PATH)%.c
 clean:
 	@rm -f $(OBJ_DIR)/* 
 	@rm -fd obj/
-	@make clean --silent -C libft/
+	@make clean -sC libft/
 
 fclean: clean
 	@rm -f $(NAME) 
-	@make fclean --silent -C libft/
+	@make fclean -sC libft/
 
 re: fclean all 
 
