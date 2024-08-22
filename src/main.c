@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 11:01:56 by skioridi          #+#    #+#             */
-/*   Updated: 2024/08/21 17:36:25 by codespace        ###   ########.fr       */
+/*   Updated: 2024/08/22 13:15:40 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int main(int ac, char **av, char **envp)
             // if(r_no == 0)
             //     break ;
         //}
-        
+        ft_bzero(cmdline, r_no);
         // read commandline
         // QUIT CONDITIONS
     }
