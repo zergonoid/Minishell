@@ -10,8 +10,8 @@ SRC =			$(addprefix $(SRC_PATH), $(SRC_FILES))
 LIBFT_PATH =	./libft/
 LIBFT =			$(LIBFT_PATH)libft.a
 
-CFLAGS =		#-Wall -Wextra -Werror -g -fsanitize=address
-OTHERFLAGS =	-L$(LIBFT_PATH) -lft -O3
+CFLAGS =		-Wall -Wextra -Werror -g -fsanitize=address
+OTHERFLAGS =	-L$(LIBFT_PATH) -lft -lreadline -O3
 
 OBJ_DIR =		./obj/
 OBJS =			$(SRC:$(SRC_PATH)%.c=$(OBJ_DIR)%.o)

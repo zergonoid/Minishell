@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skioridi <skioridi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:24:38 by skioridi          #+#    #+#             */
-/*   Updated: 2023/04/17 19:25:36 by skioridi         ###   ########.fr       */
+/*   Updated: 2024/08/22 13:11:55 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 int					ft_isalpha(int c);
 int					ft_isdigit(int c);
 int					ft_isascii(int c);
+int					ft_isspace(char c);
 int					ft_isalnum(int c);
 int					ft_isprint(int c);
 size_t				ft_strlen(const char *str);
@@ -52,6 +53,16 @@ void				ft_putchar_fd(char c, int fd);
 void				ft_putstr_fd(char *s, int fd);
 void				ft_putendl_fd(char *s, int fd);
 void				ft_putnbr_fd(int nb, int fd);
+
+void				ft_putlchar(char c, int *len);
+void				ft_putlnbr(long int nb, int *len);
+void				ft_putluns(unsigned int nb, int *len);
+void				ft_callputlhex(unsigned int nb, char *hex, int *len);
+void				ft_putlstr(char *s, int *len);
+void				ft_putladd(unsigned long add, int *len);
+int					ft_printf(const char *s, ...);
+
+
 
 typedef struct s_list
 {
