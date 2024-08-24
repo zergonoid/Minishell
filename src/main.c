@@ -12,30 +12,64 @@
 
 #include "../header.h"
 
+void    initsh(t_msh *msh)
+{
+    msh->exit = 0;
+    msh->ret = 0;
+    return ;
+}
+
+int action(char *cmdline)
+{
+    if (strncmp(cmdline, "^\\", 2))
+        ft_printf("%s\n", cmdline);
+    return (0);
+}
+
+void    handleline(t_msh *msh)
+{
+    if (msh->line)
+    {
+        add_history(msh->line);
+        if (!ft_strncmp(msh->line, "exit", ft_strlen(msh->line)))
+            msh->exit = 1;
+    }
+    return ;
+}
+
+void    c_handler()
+{
+    ft_printf("\nminishell$");
+    return ;
+}
+
+void    q_handler()
+{
+    return ;
+}
+
 int main(int ac, char **av, char **envp)
 {
+    if ((ac != 1) || !envp[0] || !envp)
+        ft_printf("Error: Exiting.\n");
     (void)av;
     (void)envp;
-    char *line;
-    if (ac == 1)
+    t_msh msh;
+    initsh(&msh);
+    signal(2, c_handler);
+    signal(3, q_handler);
+    while (msh.exit == 0) // exit the shell when receiving ctrl-D, or with command 'exit'
     {
-        while (1) // exit the shell when receiving ctrl-D, or with command 'exit'
+        msh.line = readline("minishell$");
+        handleline(&msh);
+        if (read(0, msh.line, 1) == 0) //ctrl-D
+            msh.exit = 1;
+        else
         {
-            line = readline("minishell$");
-            if (line)
-                add_history(line);
-            lexer(line);
-            // read commandline
-            // Quit when receiving SIGINT CTRL-C
-            if (ft_strncmp(line, "exit", ft_strlen(line)) == 0)
-            {   
-                free(line);
-                break ;
-            }
-            free(line);
+            action(msh.line);
+            free(msh.line);
         }
     }
-    else
-        ft_printf("Error\n");   
-    return (0);
+    //freeall(&msh);
+    return (msh.ret);
 }

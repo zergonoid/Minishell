@@ -62,8 +62,6 @@ void				ft_putlstr(char *s, int *len);
 void				ft_putladd(unsigned long add, int *len);
 int					ft_printf(const char *s, ...);
 
-
-
 typedef struct s_list
 {
 	void			*content;

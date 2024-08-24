@@ -18,11 +18,23 @@
 #include <readline/history.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <signal.h>
 
 #define MAXLINE 1024
-#define prompt "minishell$"
 
-int lexer(char *cmdline);
+typedef struct s_msh
+{
+	char		*line;
+	int		exit;
+	int		ret;
+}			t_msh;
+
+// types for node struct
+#define TYPE1 1
+#define TYPE2 2
+#define TYPE3 3
+#define TYPE4 4
+#define TYPE5 5
 
 typedef struct s_token
 {
@@ -32,3 +44,4 @@ typedef struct s_token
 	struct s_token	*prev;
 }			t_token;
 
+int lexer(char *cmdline);
