@@ -14,6 +14,7 @@
 
 void    initsh(t_msh *msh)
 {
+    msh->line = (char *)malloc(sizeof(char));
     msh->exit = 0;
     msh->ret = 0;
     return ;
@@ -28,12 +29,27 @@ int action(char *cmdline)
 
 void    handleline(t_msh *msh)
 {
+    // if (read(0, msh->line, 1) == 0) //ctrl-D
+    //     msh->exit = 1;
     if (msh->line)
     {
-        add_history(msh->line);
-        if (!ft_strncmp(msh->line, "exit", ft_strlen(msh->line)))
-            msh->exit = 1;
+        free(msh->line);
+        msh->line = (char *)NULL;
     }
+    msh->line = readline("minishell$");
+    if (msh->line && *msh->line)
+        add_history(msh->line);
+    if (msh->line && !ft_strncmp(msh->line, "exit", ft_strlen(msh->line)))
+        msh->exit = 1;
+    if (msh->line)
+        action(msh->line);
+    else
+        msh->exit = 1; // currently also quiting on ENTER input
+
+    // if (!ft_strncmp(msh->line, "-1", 2))
+    // {
+    //     msh->exit = 1;
+    // }
     return ;
 }
 
@@ -56,19 +72,12 @@ int main(int ac, char **av, char **envp)
     (void)envp;
     t_msh msh;
     initsh(&msh);
-    signal(2, c_handler);
-    signal(3, q_handler);
-    while (msh.exit == 0) // exit the shell when receiving ctrl-D, or with command 'exit'
+    signal(2, c_handler); //ctrl-C SIGINT
+    //signal(3, q_handler); //ctrl-D SIGQUIT
+
+    while (msh.exit == 0)
     {
-        msh.line = readline("minishell$");
         handleline(&msh);
-        if (read(0, msh.line, 1) == 0) //ctrl-D
-            msh.exit = 1;
-        else
-        {
-            action(msh.line);
-            free(msh.line);
-        }
     }
     //freeall(&msh);
     return (msh.ret);
