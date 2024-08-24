@@ -22,15 +22,13 @@ void    initsh(t_msh *msh)
 
 int action(char *cmdline)
 {
-    if (strncmp(cmdline, "^\\", 2))
+    //if (strncmp(cmdline, "^\\", 2))
         ft_printf("%s\n", cmdline);
     return (0);
 }
 
 void    handleline(t_msh *msh)
 {
-    // if (read(0, msh->line, 1) == 0) //ctrl-D
-    //     msh->exit = 1;
     if (msh->line)
     {
         free(msh->line);
@@ -41,15 +39,12 @@ void    handleline(t_msh *msh)
         add_history(msh->line);
     if (msh->line && !ft_strncmp(msh->line, "exit", ft_strlen(msh->line)))
         msh->exit = 1;
-    if (msh->line)
-        action(msh->line);
+    else if (msh->line && (!ft_strncmp(msh->line, "-1", 2)))
+        msh->exit = 1;
+    else if (!msh->line)
+        msh->exit = 1;
     else
-        msh->exit = 1; // currently also quiting on ENTER input
-
-    // if (!ft_strncmp(msh->line, "-1", 2))
-    // {
-    //     msh->exit = 1;
-    // }
+        action(msh->line);
     return ;
 }
 
@@ -61,6 +56,7 @@ void    c_handler()
 
 void    q_handler()
 {
+    ft_printf("minishell$");
     return ;
 }
 
@@ -73,7 +69,7 @@ int main(int ac, char **av, char **envp)
     t_msh msh;
     initsh(&msh);
     signal(2, c_handler); //ctrl-C SIGINT
-    //signal(3, q_handler); //ctrl-D SIGQUIT
+    signal(3, q_handler); //ctrl-\ SIGQUIT
 
     while (msh.exit == 0)
     {
