@@ -27,6 +27,7 @@ typedef struct s_msh
 	char		*line;
 	int		exit;
 	int		ret;
+	t_token *lst;
 }			t_msh;
 
 // types for node struct
@@ -40,7 +41,7 @@ typedef struct s_token
 {
 	char		*content;
 	int 		type;
-	struct s_token *next;
+	struct s_token	*next;
 	struct s_token	*prev;
 }			t_token;
 
