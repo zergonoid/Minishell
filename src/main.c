@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 11:01:56 by skioridi          #+#    #+#             */
-/*   Updated: 2024/08/29 13:11:00 by marvin           ###   ########.fr       */
+/*   Updated: 2024/08/29 14:15:50 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,10 @@ void    handleline(t_msh *msh)
 
 void    c_handler()
 {
-    ft_printf("\nminishell$");
-    return ;
-}
-
-void    q_handler()
-{
-    ft_printf("minishell$");
+    ft_printf("\n"); // Move to a new line
+    rl_on_new_line(); // Regenerate the prompt on a newline
+    rl_replace_line("", 0); // Clear the previous text
+    rl_redisplay();
     return ;
 }
 
@@ -77,7 +74,7 @@ int main(int ac, char **av, char **envp)
     t_msh msh;
     initsh(&msh);
     signal(2, c_handler); //ctrl-C SIGINT
-    signal(3, q_handler); //ctrl-\ SIGQUIT
+    signal(3, SIG_IGN); //ctrl-\ SIGQUIT
 
     while (msh.exit == 0)
     {

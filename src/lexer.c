@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 16:20:27 by codespace         #+#    #+#             */
-/*   Updated: 2024/08/29 13:14:36 by marvin           ###   ########.fr       */
+/*   Updated: 2024/08/29 14:16:32 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int	makeword(const char *s)
         else
             return (4);
     }
-    //else if (strncmp(s[len], "cd", 2))
+    else if (!strncmp(s[len], "cd", 2))
+        return (2);
 	while (s[len] && !ft_isspace(s[len]))
 		len++;
 	return (len);
@@ -45,7 +46,7 @@ t_token *tokenize(char *str, int wdlen)
 
     char *substring = ft_substr(str, 0, wdlen);
     a = newtoken(substring);
-    a->type = findtype(substring);// sort type
+    a->type = findtype(substring); // sort type
     return (a);
 }
 
@@ -63,12 +64,11 @@ int lexer(char *cmdline, t_token **lst_head)
         if (cmdline[i])
         {
             wdlen = makeword(&cmdline[i]);
-            ft_printf("wdlen %d\n", wdlen);
+            ft_printf("wdlen:%d ", wdlen);
             newnode = tokenize(&cmdline[i], wdlen);
             ft_tknadd_back(lst_head, newnode);
             i += wdlen; // check if it is an env variable  
         }
-        ft_printf("inside\n");
     }
     //ft_printf("Whole command line: %s\n", cmdline);
     return (0);
