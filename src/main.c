@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: msilva-c <msilva-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 11:01:56 by skioridi          #+#    #+#             */
-/*   Updated: 2024/08/29 14:15:50 by marvin           ###   ########.fr       */
+/*   Updated: 2024/08/29 16:56:42 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void    freesh(t_msh *msh)
     return ;
 }
 
-void    handleline(t_msh *msh)
+int    handleline(t_msh *msh)
 {
     if (msh->line)
     {
@@ -47,13 +47,11 @@ void    handleline(t_msh *msh)
         add_history(msh->line);
     if (msh->line && !ft_strncmp(msh->line, "exit", ft_strlen(msh->line)))
         msh->exit = 1;
-    else if (msh->line && (!ft_strncmp(msh->line, "-1", 2)))
-        msh->exit = 1;
-    else if (!msh->line)
-        msh->exit = 1;
-    else
+    else if (msh->line)
         lexer(msh->line, msh->lst_head);
-    return ;
+    else
+        return (1);
+    return (0);
 }
 
 void    c_handler()
@@ -65,20 +63,23 @@ void    c_handler()
     return ;
 }
 
+
 int main(int ac, char **av, char **envp)
 {
-    if ((ac != 1) || !envp[0] || !envp)
-        ft_printf("Error: Exiting.\n");
     (void)av;
     (void)envp;
     t_msh msh;
+    int flag;
+
+    flag = 0;
+    if ((ac != 1) || !envp[0] || !envp)
+        ft_printf("Error: Exiting.\n");
     initsh(&msh);
     signal(2, c_handler); //ctrl-C SIGINT
     signal(3, SIG_IGN); //ctrl-\ SIGQUIT
-
-    while (msh.exit == 0)
+    while (msh.exit == 0 && !flag)
     {
-        handleline(&msh);
+        flag = handleline(&msh);
     }
     freesh(&msh);
     return (msh.ret);

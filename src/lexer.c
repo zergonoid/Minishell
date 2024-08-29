@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: msilva-c <msilva-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 16:20:27 by codespace         #+#    #+#             */
-/*   Updated: 2024/08/29 14:16:32 by marvin           ###   ########.fr       */
+/*   Updated: 2024/08/29 16:01:44 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ int	makeword(const char *s)
         else
             return (4);
     }
-    else if (!strncmp(s[len], "cd", 2))
-        return (2);
+    //else if (!strncmp(s[len], "cd", 2))
+    //    return (2);
 	while (s[len] && !ft_isspace(s[len]))
 		len++;
 	return (len);
