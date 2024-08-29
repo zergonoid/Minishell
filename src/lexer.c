@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 16:20:27 by codespace         #+#    #+#             */
-/*   Updated: 2024/08/29 12:28:54 by marvin           ###   ########.fr       */
+/*   Updated: 2024/08/29 13:14:36 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,12 @@ t_token *tokenize(char *str, int wdlen)
     return (a);
 }
 
-int lexer(char *cmdline)
+int lexer(char *cmdline, t_token **lst_head)
 {
     int i = 0;
     int wdlen = 0;
     t_token *newnode;
-    t_token **lst_head = (t_token **)malloc(sizeof(t_token *));
-    *lst_head = NULL;
+    newnode = NULL;
 
     while (cmdline[i])
     {
@@ -69,7 +68,8 @@ int lexer(char *cmdline)
             ft_tknadd_back(lst_head, newnode);
             i += wdlen; // check if it is an env variable  
         }
+        ft_printf("inside\n");
     }
-    ft_printf("%s\n", cmdline);
+    //ft_printf("Whole command line: %s\n", cmdline);
     return (0);
 }

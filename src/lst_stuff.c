@@ -22,7 +22,7 @@ t_token	*newtoken(char *content)
 	new->content = content;
     new->type = 0;
 	new->next = NULL;
-	ft_printf("Made new token.\n%s$\n", new->content);
+	ft_printf("Made new token: %s$\n", new->content);
 	return (new);
 }
 
@@ -30,7 +30,6 @@ t_token	*ft_tknlast(t_token *lst)
 {
 	if (!lst)
 		return (NULL);
-	ft_printf("Finding last token.\n%s\n", lst->next);
 	while (lst->next)
 		lst = lst->next;
 	return (lst);
@@ -42,4 +41,27 @@ void	ft_tknadd_back(t_token **lst, t_token *new)
 		*lst = new;
 	else
 		ft_tknlast(*lst)->next = new;
+}
+
+void	ft_tknclear(t_token **lst)
+{
+	t_token	*temp;
+
+	while (*lst && (*lst)->next)
+	{
+		temp = (*lst)->next;
+		if ((*lst)->content)
+			free((*lst)->content);
+		free(*lst);
+		*lst = NULL;
+		*lst = temp;
+	}
+	if (*lst)
+	{
+		if ((*lst)->content)
+			free((*lst)->content);
+	}
+	free(*lst);
+	free(lst);
+	lst = NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 11:01:56 by skioridi          #+#    #+#             */
-/*   Updated: 2024/08/29 12:12:22 by marvin           ###   ########.fr       */
+/*   Updated: 2024/08/29 13:11:00 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,22 @@ t_msh    *initsh(t_msh *msh)
     msh->line = (char *)malloc(sizeof(char));
     msh->exit = 0;
     msh->ret = 0;
+    msh->lst_head = (t_token **)malloc(sizeof(t_token *));
+    *(msh->lst_head) = NULL;
     return (msh);
+}
+
+void    freesh(t_msh *msh)
+{
+    if (msh->line)
+    {
+        free(msh->line);
+    }
+    if (msh->lst_head)
+    {
+        ft_tknclear(msh->lst_head);
+    }
+    return ;
 }
 
 void    handleline(t_msh *msh)
@@ -37,7 +52,7 @@ void    handleline(t_msh *msh)
     else if (!msh->line)
         msh->exit = 1;
     else
-        lexer(msh->line);
+        lexer(msh->line, msh->lst_head);
     return ;
 }
 
@@ -68,6 +83,6 @@ int main(int ac, char **av, char **envp)
     {
         handleline(&msh);
     }
-    //freeall(&msh);
+    freesh(&msh);
     return (msh.ret);
 }

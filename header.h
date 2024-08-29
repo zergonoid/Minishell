@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 22:50:42 by skioridi          #+#    #+#             */
-/*   Updated: 2024/08/29 12:01:35 by marvin           ###   ########.fr       */
+/*   Updated: 2024/08/29 12:45:24 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,20 @@
 
 #define MAXLINE 1024
 
+typedef struct s_token
+{
+	char		*content;
+	int 		type;
+	struct s_token	*next;
+	struct s_token	*prev;
+}			t_token;
+
 typedef struct s_msh
 {
 	char		*line;
 	int		exit;
 	int		ret;
+	t_token **lst_head;
 }			t_msh;
 
 // types for node struct
@@ -36,16 +45,8 @@ typedef struct s_msh
 #define TYPE4 4
 #define TYPE5 5
 
-typedef struct s_token
-{
-	char		*content;
-	int 		type;
-	struct s_token	*next;
-	struct s_token	*prev;
-}			t_token;
-
-
+void	ft_tknclear(t_token **lst);
 t_token	*newtoken(char *content);
 t_token	*ft_tknlast(t_token *lst);
 void	ft_tknadd_back(t_token **lst, t_token *new);
-int lexer(char *cmdline);
+int lexer(char *cmdline, t_token **lst_head);
