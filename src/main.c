@@ -3,28 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 11:01:56 by skioridi          #+#    #+#             */
-/*   Updated: 2024/08/22 14:15:50 by codespace        ###   ########.fr       */
+/*   Updated: 2024/08/29 12:12:22 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-void    initsh(t_msh *msh)
+t_msh    *initsh(t_msh *msh)
 {
     msh->line = (char *)malloc(sizeof(char));
     msh->exit = 0;
     msh->ret = 0;
-    return ;
-}
-
-int action(char *cmdline)
-{
-    //if (strncmp(cmdline, "^\\", 2))
-        ft_printf("%s\n", cmdline);
-    return (0);
+    return (msh);
 }
 
 void    handleline(t_msh *msh)
@@ -44,7 +37,7 @@ void    handleline(t_msh *msh)
     else if (!msh->line)
         msh->exit = 1;
     else
-        action(msh->line);
+        lexer(msh->line);
     return ;
 }
 

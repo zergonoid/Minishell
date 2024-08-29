@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 16:20:27 by codespace         #+#    #+#             */
-/*   Updated: 2024/08/21 16:46:47 by codespace        ###   ########.fr       */
+/*   Updated: 2024/08/29 12:28:54 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ int	makeword(const char *s)
 	size_t	len;
 
 	len = 0;
-    if (strncmp(s[len], "echo", 4) && ft_isspace())
+    if (!strncmp(&s[len], "echo", 4))
     {
-        if (strncmp(s[len], "echo -n", 7))
+        if (!strncmp(&s[len], "echo -n", 7))
             return (7);
         else
             return (4);
@@ -30,24 +30,10 @@ int	makeword(const char *s)
 	return (len);
 }
 
-
-t_token	*newtoken(char *content)
-{
-	t_token	*new;
-
-	new = (t_token *)malloc(sizeof(t_token));
-	if (!new)
-		return (NULL);
-	new->content = content;
-    new->type = 0;
-	new->next = NULL;
-	return (new);
-}
-
 int     findtype(char *s)
 {
     int type = 0;
-
+    (void)s;
 
     // ft_putstr_fd(char *string_that_failed, int 2);
     return (type);
@@ -69,6 +55,7 @@ int lexer(char *cmdline)
     int wdlen = 0;
     t_token *newnode;
     t_token **lst_head = (t_token **)malloc(sizeof(t_token *));
+    *lst_head = NULL;
 
     while (cmdline[i])
     {
@@ -76,9 +63,10 @@ int lexer(char *cmdline)
             i++;
         if (cmdline[i])
         {
-            wdlen = makeword(cmdline[i]);
-            newnode = tokenize(cmdline[i], wdlen);
-            ft_lstadd_back(lst_head, newnode);
+            wdlen = makeword(&cmdline[i]);
+            ft_printf("wdlen %d\n", wdlen);
+            newnode = tokenize(&cmdline[i], wdlen);
+            ft_tknadd_back(lst_head, newnode);
             i += wdlen; // check if it is an env variable  
         }
     }

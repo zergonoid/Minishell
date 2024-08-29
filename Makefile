@@ -4,7 +4,7 @@ CC = cc
 
 #libs
 SRC_PATH =		./src/
-SRC_FILES =		main.c lexer.c
+SRC_FILES =		main.c lexer.c lst_stuff.c 
 SRC =			$(addprefix $(SRC_PATH), $(SRC_FILES))
 
 LIBFT_PATH =	./libft/
