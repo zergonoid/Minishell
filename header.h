@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   header.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: msilva-c <msilva-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 22:50:42 by skioridi          #+#    #+#             */
-/*   Updated: 2024/08/29 12:45:24 by marvin           ###   ########.fr       */
+/*   Updated: 2024/08/30 14:02:09 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,12 @@ typedef struct s_msh
 }			t_msh;
 
 // types for node struct
-#define TYPE1 1
-#define TYPE2 2
-#define TYPE3 3
-#define TYPE4 4
-#define TYPE5 5
+#define CMD 1
+#define PIPE 2
+#define REDIR 3
+#define QUOTE 4
+#define ENVVAR 5
+//#define  6
 
 void	ft_tknclear(t_token **lst);
 t_token	*newtoken(char *content);

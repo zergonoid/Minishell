@@ -6,7 +6,7 @@
 /*   By: msilva-c <msilva-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 16:20:27 by codespace         #+#    #+#             */
-/*   Updated: 2024/08/29 16:01:44 by msilva-c         ###   ########.fr       */
+/*   Updated: 2024/08/30 14:51:01 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,50 @@
 
 int	makeword(const char *s)
 {
-	size_t	len;
+    int i = 0;
+    int len = 0;
 
-	len = 0;
-    if (!strncmp(&s[len], "echo", 4))
+
+    while (s[i] && !ft_isspace(s[i]))
     {
-        if (!strncmp(&s[len], "echo -n", 7))
-            return (7);
+        if ((s[i] == '"' && strchr(&s[i + 1], '"')) || (s[i] == 39 && strchr(&s[i + 1], 39)))
+        {
+            i++;
+            while (s[i] != 39 && s[i] != '"')
+            {
+                i++;
+                len++;
+                ft_printf("is here\n");
+            }
+            len++;
+        }
         else
-            return (4);
+        {
+            len++;
+            i++;
+        }
     }
-    //else if (!strncmp(s[len], "cd", 2))
-    //    return (2);
-	while (s[len] && !ft_isspace(s[len]))
-		len++;
-	return (len);
+    return (len);
 }
 
 int     findtype(char *s)
 {
-    int type = 0;
-    (void)s;
-
+    if (!strncmp(s, "echo", ft_strlen(s)) || !strncmp(s, "pwd", ft_strlen(s)) || !strncmp(s, "export", ft_strlen(s)) \
+            || !strncmp(s, "cd", ft_strlen(s)) || !strncmp(s, "unset", ft_strlen(s)) || !strncmp(s, "env", ft_strlen(s)))
+    {
+        ft_printf("CMD = %s\n", s);
+        return (CMD);
+    }
+    else if (!strncmp(s, "|", ft_strlen(s)))
+        return (PIPE);
+    else if (!strncmp(s, ">", ft_strlen(s)) || !strncmp(s, "<", ft_strlen(s)) || !strncmp(s, ">>", ft_strlen(s)) \
+            || !strncmp(s, "<<", ft_strlen(s)))
+        return (REDIR);
+    //else if (s[0] == '"' && s[ft_strlen(s)] == '"')
+    //else
+        
     // ft_putstr_fd(char *string_that_failed, int 2);
-    return (type);
+    return (0);
 }
 
 t_token *tokenize(char *str, int wdlen)
@@ -45,6 +65,7 @@ t_token *tokenize(char *str, int wdlen)
     t_token *a;
 
     char *substring = ft_substr(str, 0, wdlen);
+
     a = newtoken(substring);
     a->type = findtype(substring); // sort type
     return (a);
