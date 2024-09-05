@@ -22,7 +22,7 @@ t_token	*newtoken(char *content)
 	new->content = content;
     new->type = 0;
 	new->next = NULL;
-	ft_printf("New token: %s$\n", new->content);
+	ft_printf("token:%s$ ", new->content);
 	return (new);
 }
 

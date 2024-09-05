@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msilva-c <msilva-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 11:01:56 by skioridi          #+#    #+#             */
-/*   Updated: 2024/08/29 16:56:42 by msilva-c         ###   ########.fr       */
+/*   Updated: 2024/09/05 14:32:01 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void    c_handler()
     rl_redisplay();
     return ;
 }
-
 
 int main(int ac, char **av, char **envp)
 {
