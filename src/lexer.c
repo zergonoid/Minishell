@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 16:20:27 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/05 14:31:49 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/13 16:20:35 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,14 @@ int	makeword(const char *s)
         if ((s[i] == '"' && strchr(&s[i + 1], '"')) || (s[i] == 39 && strchr(&s[i + 1], 39)))
         {
             i++;
+            len++;
             while (s[i] != 39 && s[i] != '"')
             {
                 i++;
                 len++;
             }
             len++;
+            i++;
         }
         else
         {
@@ -58,45 +60,11 @@ int     findtype(char *s)
     return (0);
 }
 
-char *rmquotes(char **s)
-{
-    char *word = *s;
-    int i = 0;
-    int save = 0;
-    
-    if (ft_strchr(&word[i], '"')) // NULL when no " -- POSITION of " when yes
-    {
-        while (word[i] != '"')
-            i++;
-        save = i + 1;
-        if (ft_strchr(&word[save], '"'))
-        {
-            while(word[i + 1])
-            {
-                if (word[i + 1] == '"')
-                {
-                    i++;
-                    word[i] = word[i + 1];
-                }
-                else
-                {
-                    word[i] = word[i + 1];
-                    i++;
-                }
-            }
-            while (word[i])
-                word[i++] = '\0';
-        }
-    }
-    return (word);
-}
-
 t_token *tokenize(char *str, int wdlen)
 {
     t_token *a;
 
     char *substring = ft_substr(str, 0, wdlen);
-    substring = rmquotes(&substring);
     a = newtoken(substring);
     a->type = findtype(substring); // sort type
     ft_printf("type:%d\n", a->type);

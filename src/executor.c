@@ -12,7 +12,8 @@
 
 #include "../header.h"
 
-int executor(t_token **lst)
+
+int runthrough(t_token **lst)
 {
     t_token *curr;
 
@@ -28,4 +29,22 @@ int executor(t_token **lst)
         curr = curr->next;
     }
     return (0);
+}
+
+int expander(t_token **tkn)
+{
+    if (tkn->type = CMD)
+    {
+        tkn->content = ft_strjoin( , ); // from Mada s pipex, add envpath
+
+    }
+
+}
+
+int executor(t_token **lst)
+{
+    expander(lst);
+
+    runthrough(lst);
+
 }
