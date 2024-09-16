@@ -19,8 +19,9 @@ int run(t_token **lst, char **envp)
     curr = (*lst);
     while (curr->next)
     {
-        if (curr->type == CMD)
-            execve(curr->content/*PATHNAME*/, curr->content/*FILENAME*/, envp); //(content will have been EXPANDED to PATH)
+        (void)envp;
+        //if (curr->type == CMD)
+        //    execve(curr->content/*PATHNAME*/, curr->content/*FILENAME*/, envp); //(content will have been EXPANDED to PATH)
         // if (curr->type == PIPE)
         //     pipe_handler();
         // if (curr->type == REDIR)
