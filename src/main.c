@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 11:01:56 by skioridi          #+#    #+#             */
-/*   Updated: 2024/09/16 17:24:40 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/16 18:28:38 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int main(int ac, char **av, char **envp)
     while (msh.exit == 0 && !flag)
     {
         flag = handleline(&msh);
-        executor(&msh);
+        executor(&msh, envp);
     }
     freesh(&msh);
     return (msh.ret);

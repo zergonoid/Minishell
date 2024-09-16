@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 16:20:27 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/16 17:44:28 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/16 18:01:09 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,13 @@ int	makeword(const char *s)
 
 int checkifenv(char *s)
 {
-    int i = 1;
-    if (!strncmp(&s[i], "PATH", ft_strlen(&s[i])))
+    char *env_v = getenv(&s[1]);
+
+    if (env_v)
+    {
+        ft_printf("ENV.VARIABLE ");
         return (1);
+    }
     return (0);
 }
 

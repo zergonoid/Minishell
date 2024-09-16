@@ -12,15 +12,15 @@
 
 #include "../header.h"
 
-int runthrough(t_token **lst)
+int run(t_token **lst, char **envp)
 {
     t_token *curr;
 
     curr = (*lst);
     while (curr->next)
     {
-        //if (curr->type == CMD)
-        //    execve(curr->content, NULL, envp); //(content will have been EXPANDED to PATH)
+        if (curr->type == CMD)
+            execve(curr->content/*PATHNAME*/, curr->content/*FILENAME*/, envp); //(content will have been EXPANDED to PATH)
         // if (curr->type == PIPE)
         //     pipe_handler();
         // if (curr->type == REDIR)
@@ -35,23 +35,29 @@ int expander(t_token **tkn)
     t_token *curr = *tkn;
 
     ft_printf("expander\n");
-    while (curr && curr->next)
+    while (curr)
     {
         if (curr->type == CMD)
         {
             //curr->content = ft_strjoin( , ); // from Mada s pipex, add envpath
         }
-        curr = curr->next;
-        // if (curr->type = )
+        else if (curr->type == STR)
+        {
+            quotehandle(&curr);
+        }
+        if (curr->next)
+            curr = curr->next;
+        else
+        break;
     }
     return (0);
 }
 
-int executor(t_msh *msh)
+int executor(t_msh *msh, char **envp)
 {
     ft_printf("executor\\");
     expander(msh->lst_head);
 
-    runthrough(msh->lst_head);
+    run(msh->lst_head, envp);
     return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 22:50:42 by skioridi          #+#    #+#             */
-/*   Updated: 2024/09/16 17:46:10 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/16 18:28:35 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,6 @@ t_token	*newtoken(char *content);
 t_token	*ft_tknlast(t_token *lst);
 void	ft_tknadd_back(t_token **lst, t_token *new);
 int lexer(char *cmdline, t_token **lst_head);
-int executor(t_msh *msh);
+int executor(t_msh *msh, char **envp);
+int quotehandle(t_token **tkn);
+int checkifenv(char *s);
