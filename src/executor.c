@@ -12,7 +12,6 @@
 
 #include "../header.h"
 
-
 int runthrough(t_token **lst)
 {
     t_token *curr;
@@ -20,8 +19,8 @@ int runthrough(t_token **lst)
     curr = (*lst);
     while (curr->next)
     {
-        if (curr->type == CMD)
-            execve(curr->content, argv[], envp[]); //(content will have been EXPANDED to PATH)
+        //if (curr->type == CMD)
+        //    execve(curr->content, NULL, envp); //(content will have been EXPANDED to PATH)
         // if (curr->type == PIPE)
         //     pipe_handler();
         // if (curr->type == REDIR)
@@ -33,18 +32,26 @@ int runthrough(t_token **lst)
 
 int expander(t_token **tkn)
 {
-    if (tkn->type = CMD)
+    t_token *curr = *tkn;
+
+    ft_printf("expander\n");
+    while (curr && curr->next)
     {
-        tkn->content = ft_strjoin( , ); // from Mada s pipex, add envpath
-
+        if (curr->type == CMD)
+        {
+            //curr->content = ft_strjoin( , ); // from Mada s pipex, add envpath
+        }
+        curr = curr->next;
+        // if (curr->type = )
     }
-
+    return (0);
 }
 
-int executor(t_token **lst)
+int executor(t_msh *msh)
 {
-    expander(lst);
+    ft_printf("executor\\");
+    expander(msh->lst_head);
 
-    runthrough(lst);
-
+    runthrough(msh->lst_head);
+    return (0);
 }

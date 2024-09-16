@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 16:20:27 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/13 17:14:39 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/16 17:44:28 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,19 @@ int	makeword(const char *s)
     return (len);
 }
 
+int checkifenv(char *s)
+{
+    int i = 1;
+    if (!strncmp(&s[i], "PATH", ft_strlen(&s[i])))
+        return (1);
+    return (0);
+}
+
 int     findtype(char *s)
 {
     if (!strncmp(s, "echo", ft_strlen(s)) || !strncmp(s, "pwd", ft_strlen(s)) || !strncmp(s, "export", ft_strlen(s)) \
             || !strncmp(s, "cd", ft_strlen(s)) || !strncmp(s, "unset", ft_strlen(s)) || !strncmp(s, "env", ft_strlen(s)))
     {
-        ft_printf("CMD = %s ", s);
         return (CMD);
     }
     else if (!strncmp(s, "|", ft_strlen(s)))
@@ -53,10 +60,14 @@ int     findtype(char *s)
     else if (!strncmp(s, ">", ft_strlen(s)) || !strncmp(s, "<", ft_strlen(s)) || !strncmp(s, ">>", ft_strlen(s)) \
             || !strncmp(s, "<<", ft_strlen(s)))
         return (REDIR);
-    //else if (s[0] == '"' && s[ft_strlen(s)] == '"')
-    //else
-        
-    // ft_putstr_fd(char *string_that_failed, int 2);
+    else if (!strncmp(s, "$", 1))
+    {
+        if (checkifenv(s))
+            return (ENVVAR);
+        return (STR);
+    }
+    else
+        return (STR);   
     return (0);
 }
 
@@ -91,6 +102,5 @@ int lexer(char *cmdline, t_token **lst_head)
             i += wdlen; // check if it is an env variable  
         }
     }
-    //ft_printf("Whole command line: %s\n", cmdline);
     return (0);
 }
