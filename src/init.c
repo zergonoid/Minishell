@@ -6,7 +6,7 @@
 /*   By: msilva-c <msilva-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 18:18:18 by msilva-c          #+#    #+#             */
-/*   Updated: 2024/09/18 19:12:36 by msilva-c         ###   ########.fr       */
+/*   Updated: 2024/09/18 19:18:31 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,6 @@ t_msh    *init_all(t_msh *msh)
     msh->ret = 0;
     msh->lst_head = (t_token **)malloc(sizeof(t_token *));
     *(msh->lst_head) = NULL;
+    msh->env = NULL;
     return (msh);
 }

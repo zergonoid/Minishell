@@ -6,13 +6,13 @@
 /*   By: msilva-c <msilva-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 11:01:56 by skioridi          #+#    #+#             */
-/*   Updated: 2024/09/18 19:12:36 by msilva-c         ###   ########.fr       */
+/*   Updated: 2024/09/18 19:32:46 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-int    handleline(t_msh *msh)
+bool    handleline(t_msh *msh)
 {
     if (msh->line)
     {
@@ -27,8 +27,8 @@ int    handleline(t_msh *msh)
     else if (msh->line)
         lexer(msh->line, msh->lst_head);
     else
-        return (1);
-    return (0);
+        return (false);
+    return (true);
 }
 
 void    c_handler()
@@ -47,14 +47,14 @@ int main(int ac, char **av, char **envp)
     t_msh msh;
     int flag;
 
+    init_all(&msh);
     msh.env = copy_matrix(envp);
-    flag = 0;
+    flag = true;
     if ((ac != 1) || !envp[0] || !envp)
         ft_printf("Error: Exiting.\n");
-    init_all(&msh);
     signal(2, c_handler); //ctrl-C SIGINT
     signal(3, SIG_IGN); //ctrl-\ SIGQUIT
-    while (msh.exit == 0 && !flag)
+    while (msh.exit == 0 && flag == true)
     {
         flag = handleline(&msh);
     }
