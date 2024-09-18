@@ -6,11 +6,11 @@
 /*   By: msilva-c <msilva-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 16:20:27 by codespace         #+#    #+#             */
-/*   Updated: 2024/08/30 14:51:01 by msilva-c         ###   ########.fr       */
+/*   Updated: 2024/09/18 18:55:13 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header.h"
+#include "header.h"
 
 int	makeword(const char *s)
 {
@@ -55,7 +55,7 @@ int     findtype(char *s)
         return (REDIR);
     //else if (s[0] == '"' && s[ft_strlen(s)] == '"')
     //else
-        
+
     // ft_putstr_fd(char *string_that_failed, int 2);
     return (0);
 }
@@ -88,7 +88,7 @@ int lexer(char *cmdline, t_token **lst_head)
             ft_printf("wdlen:%d ", wdlen);
             newnode = tokenize(&cmdline[i], wdlen);
             ft_tknadd_back(lst_head, newnode);
-            i += wdlen; // check if it is an env variable  
+            i += wdlen; // check if it is an env variable
         }
     }
     //ft_printf("Whole command line: %s\n", cmdline);

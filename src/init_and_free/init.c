@@ -1,31 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msilva-c <msilva-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/25 17:07:16 by msilva-c          #+#    #+#             */
+/*   Created: 2024/09/18 18:18:18 by msilva-c          #+#    #+#             */
 /*   Updated: 2024/09/18 18:55:13 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-int lexer(char *cmdline)
+t_msh    *init_all(t_msh *msh)
 {
-    int i;
-    t_token *lst;
-
-    lst = (t_token*)malloc(sizeof(t_token));
-    lst->prev = NULL;
-    lst->next = NULL;
-
-    while (ft_isspace(&cmdline[i]));
-        i++;
-    while (cmdline[i])
-    {
-
-    }
-
+    msh->line = (char *)malloc(sizeof(char));
+    msh->exit = 0;
+    msh->ret = 0;
+    msh->lst_head = (t_token **)malloc(sizeof(t_token *));
+    *(msh->lst_head) = NULL;
+    return (msh);
 }

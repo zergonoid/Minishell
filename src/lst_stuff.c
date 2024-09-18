@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header.h"
+#include "header.h"
 
 t_token	*newtoken(char *content)
 {
@@ -35,12 +35,12 @@ t_token	*ft_tknlast(t_token *lst)
 	return (lst);
 }
 
-void	ft_tknadd_back(t_token **lst, t_token *new)
+void	ft_tknadd_back(t_token **lst, t_token *newnode)
 {
 	if (!*lst)
-		*lst = new;
+		*lst = newnode;
 	else
-		ft_tknlast(*lst)->next = new;
+		ft_tknlast(*lst)->next = newnode;
 }
 
 void	ft_tknclear(t_token **lst)

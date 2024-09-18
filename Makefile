@@ -3,14 +3,12 @@ NAME = minishell
 CC = cc
 
 #libs
-SRC_PATH =		./src/
-SRC_FILES =		main.c lexer.c lst_stuff.c 
-SRC =			$(addprefix $(SRC_PATH), $(SRC_FILES))
+SRC =			$(wildcard src/**/*.c) $(wildcard src/*.c)
 
 LIBFT_PATH =	./libft/
 LIBFT =			$(LIBFT_PATH)libft.a
 
-CFLAGS =		-Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS =		-Wall -Wextra -Werror -I -g -fsanitize=address
 OTHERFLAGS =	-L$(LIBFT_PATH) -lft -lreadline -lasan -O3
 
 OBJ_DIR =		./obj/
@@ -28,14 +26,14 @@ $(OBJ_DIR)%.o: $(SRC_PATH)%.c
 	@$(CC) $(CFLAGS) $(INC_FLAGS) -c $< -o $@
 
 clean:
-	@rm -f $(OBJ_DIR)/* 
+	@rm -f $(OBJ_DIR)/*
 	@rm -fd obj/
 	@make clean -sC libft/
 
 fclean: clean
-	@rm -f $(NAME) 
+	@rm -f $(NAME)
 	@make fclean -sC libft/
 
-re: fclean all 
+re: fclean all
 
 .PHONY: all clean fclean re
