@@ -62,11 +62,19 @@ t_msh    *init_all(t_msh *msh);
 void   free_and_exit(t_msh *msh);
 void	ft_free_matrix(char **matrix);
 
+/* lexer.c */
+int     findtype(char *s);
+t_token *tokenize(char *str, int wdlen);
+int add_node(t_token **lst_head, char *line, int i, int j);
+int strchr_wdlen(const char *s, int c);
+void split_cmds(char *line, int i, int j, t_token **lst_head);
+void new_lexer(char *cmdline, t_token **lst_head);
+
+/* lst_utils.c */
 void	ft_tknclear(t_token **lst);
 t_token	*newtoken(char *content);
 t_token	*ft_tknlast(t_token *lst);
 void	ft_tknadd_back(t_token **lst, t_token *newnode);
-int lexer(char *cmdline, t_token **lst_head);
 
 
 #endif
