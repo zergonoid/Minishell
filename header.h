@@ -64,7 +64,7 @@ void	ft_free_matrix(char **matrix);
 
 /* lexer.c */
 int     findtype(char *s);
-t_token *tokenize(char *str, int wdlen);
+t_token *tokenize(char *str, int start, int wdlen);
 int add_node(t_token **lst_head, char *line, int i, int j);
 int strchr_wdlen(const char *s, int c);
 void split_cmds(char *line, int i, int j, t_token **lst_head);

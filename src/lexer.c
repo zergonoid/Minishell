@@ -6,18 +6,18 @@
 /*   By: msilva-c <msilva-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 16:20:27 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/20 19:25:20 by msilva-c         ###   ########.fr       */
+/*   Updated: 2024/09/20 19:56:33 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-t_token *tokenize(char *str, int wdlen)
+t_token *tokenize(char *str, int start, int wdlen)
 {
     t_token *a;
 
-    char *substring = ft_substr(str, 0, wdlen);
-
+    char *substring = ft_substr(str, start, wdlen);
+	printf("substring: %s\n", substring);
     a = newtoken(substring);
     a->type = findtype(substring); // sort type
     return (a);
@@ -36,8 +36,8 @@ int add_node(t_token **lst_head, char *line, int i, int end)
     }
     printf("$\nadded node\n");
     return (end);
-
-    t_token *newnode = tokenize(&line[i], end);
+    t_token *newnode = tokenize(line, i, end);
+	//printf("is here\n");
     if (!*lst_head)
     {
         *lst_head = newnode;
@@ -74,18 +74,18 @@ void split_cmds(char *line, int i, int space, t_token **lst_head)
 {
 	int test = i;
     printf("\n--- entered split_cmds ---\n");
-	while (test < space)
-		printf("%c", line[test++]);
-	printf("$\n");
-    printf("\n--- starting to split ---\n");
+	//while (test < space)
+	//	printf("%c", line[test++]);
+	//printf("$\n");
+    //printf("\n--- starting to split ---\n");
     int flag = 0;
     int start = i;
     while (line[i] && i < space)
     {
     	if (line[i] == '|' || line[i] == '>' || line[i] == '<')
         {
-            printf("space is %d\ni is %d\nstart is %d\n", space, i, start);
-			printf("line[i] = %c\n", line[i]);
+            //printf("space is %d\ni is %d\nstart is %d\n", space, i, start);
+			//printf("line[i] = %c\n", line[i]);
             if (i + 1 < space && line[i + 1] && line[i + 1] == line[i])
             {
 				if (i > start)
@@ -111,38 +111,11 @@ void split_cmds(char *line, int i, int space, t_token **lst_head)
             flag++;
             i++;
         }
-
     }
     if (flag)
         add_node(lst_head, line, start, i);
-   /*  else if (start != i)
-        add_node(lst_head, line, start, i + 1); */
     return ;
 }
-
-void new_lexer(char *cmdline, t_token **lst_head)
-{
-    int i = 0;
-    int start;
-
-    while (cmdline[i])
-    {
-        if (cmdline[i] == 39 || cmdline[i] == 34)
-        {
-            i += strchr_wdlen(&cmdline[i], cmdline[i]);
-            start = i;
-        }
-        while (ft_isspace(cmdline[i]) && cmdline[i])
-            i++;
-        start = i;
-        while (!ft_isspace(cmdline[i]) && cmdline[i])
-            i++;
-        split_cmds(cmdline, start, i, lst_head);
-        start = i;
-    }
-    return ;
-}
-
 
 int	quote_handler(char *cmdline, int i, t_token **lst_head)
 {
@@ -152,11 +125,11 @@ int	quote_handler(char *cmdline, int i, t_token **lst_head)
 	wdlen = strchr_wdlen(&cmdline[i], cmdline[i]);
 	if (wdlen)
 	{
-		int test = i + wdlen;
-		int ii = i;
-		while (ii < test)
-			printf("%c", cmdline[ii++]);
-		printf("$\n\n");
+		//int test = i + wdlen;
+		//int ii = i;
+		//while (ii < test)
+		//	printf("%c", cmdline[ii++]);
+		//printf("$\n\n");
 		add_node(lst_head, cmdline, i, i + wdlen);
 		return (wdlen);
 	}
