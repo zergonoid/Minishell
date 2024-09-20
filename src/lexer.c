@@ -6,7 +6,7 @@
 /*   By: msilva-c <msilva-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 16:20:27 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/19 12:13:02 by msilva-c         ###   ########.fr       */
+/*   Updated: 2024/09/20 13:38:02 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,21 +39,21 @@ t_token *tokenize(char *str, int wdlen)
     return (a);
 }
 
-int add_node(t_token **lst_head, char *line, int i, int j)
+int add_node(t_token **lst_head, char *line, int i, int end)
 {
     t_token *last;
 
-    t_token *newnode = tokenize(&line[i], j);
+    t_token *newnode = tokenize(&line[i], end);
     if (!*lst_head)
     {
         *lst_head = newnode;
-        return (j);
+        return (end);
     }
     last = ft_tknlast(*lst_head);
     last->next = newnode;
     newnode->prev = last;
     ft_tknadd_back(lst_head, newnode);
-    return (j);
+    return (end);
 }
 
 /* return value: nr of chars that later we'll copy
@@ -75,15 +75,16 @@ int strchr_wdlen(const char *s, int c)
 	return (0);
 }
 
-void split_cmds(char *line, int i, int j, t_token **lst_head)
+void split_cmds(char *line, int i, int space, t_token **lst_head)
 {
     int flag = 0;
-    int start = i;
 
-    while (line[i] && i <= j)
+    int start = i;
+    while (line[i] && i < space)
     {
         if (line[i] == 39 && strchr_wdlen(&line[i], 39))
         {
+            printf("ret value of strchr_wdlen = %d\n", strchr_wdlen(&line[i], 39));
             i += add_node(lst_head, line, i, strchr_wdlen(&line[i], 39));
             flag = 0;
         }
@@ -135,12 +136,20 @@ void new_lexer(char *cmdline, t_token **lst_head)
 
     while (cmdline[i])
     {
-        while (ft_isspace(cmdline[i] && cmdline[i])) //skip whitespace
+        while (ft_isspace(cmdline[i]) && cmdline[i]) //skip whitespace
             i++;
         start = i;
         while (!ft_isspace(cmdline[i]) && cmdline[i]) //skip word
             i++;
-        split_cmds(cmdline, start, i - 1, lst_head);
+        printf("start = %d, i = %d\n", start, i);
+        split_cmds(cmdline, start, i, lst_head);
+        while (cmdline[start] && start < i)
+        {
+            printf("%c", cmdline[start]);
+            start++;
+        }
+        printf("\n");
+        start = i;
     }
     return ;
 }
