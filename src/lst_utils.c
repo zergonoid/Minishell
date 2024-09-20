@@ -12,6 +12,21 @@
 
 #include "../header.h"
 
+int     findtype(char *s)
+{
+    if (!strncmp(s, "echo", ft_strlen(s)) || !strncmp(s, "pwd", ft_strlen(s)) || !strncmp(s, "export", ft_strlen(s)) \
+            || !strncmp(s, "cd", ft_strlen(s)) || !strncmp(s, "unset", ft_strlen(s)) || !strncmp(s, "env", ft_strlen(s)))
+        return (CMD);
+    else if (!strncmp(s, "|", ft_strlen(s)))
+        return (PIPE);
+    else if (!strncmp(s, ">", ft_strlen(s)) || !strncmp(s, "<", ft_strlen(s)) || !strncmp(s, ">>", ft_strlen(s)) \
+            || !strncmp(s, "<<", ft_strlen(s)))
+        return (REDIR);
+	else if (!strncmp(s, "$", ft_strlen(s)))
+		return (ENVVAR);
+    return (STR);
+}
+
 t_token	*newtoken(char *content)
 {
 	t_token	*new;
