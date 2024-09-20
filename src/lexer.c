@@ -6,7 +6,7 @@
 /*   By: msilva-c <msilva-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 16:20:27 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/20 18:35:42 by msilva-c         ###   ########.fr       */
+/*   Updated: 2024/09/20 19:25:20 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,29 +76,31 @@ void split_cmds(char *line, int i, int space, t_token **lst_head)
     printf("\n--- entered split_cmds ---\n");
 	while (test < space)
 		printf("%c", line[test++]);
-	printf("$\n\n");
-	return ;
-
+	printf("$\n");
+    printf("\n--- starting to split ---\n");
     int flag = 0;
     int start = i;
     while (line[i] && i < space)
     {
     	if (line[i] == '|' || line[i] == '>' || line[i] == '<')
         {
-            if (line[i + 1] && line[i + 1] == line[i])
+            printf("space is %d\ni is %d\nstart is %d\n", space, i, start);
+			printf("line[i] = %c\n", line[i]);
+            if (i + 1 < space && line[i + 1] && line[i + 1] == line[i])
             {
-                add_node(lst_head, line, start, i);
-                add_node(lst_head, line, i + 1, 2);
-                i += 3;
+				if (i > start)
+                	add_node(lst_head, line, start, i);
+                add_node(lst_head, line, i, i + 2);
+                i += 2;
                 flag = 0;
                 start = i;
             }
             else
             {
-                printf("i is %d\nline[i] = %c\nstart is %d\n", i, line[i], start);
-                add_node(lst_head, line, start, i + 1);
+				if (i > start)
+                	add_node(lst_head, line, start, i);
                 add_node(lst_head, line, i, i + 1);
-                i += 2;
+                i += 1;
                 flag = 0;
                 start = i;
 
@@ -112,7 +114,7 @@ void split_cmds(char *line, int i, int space, t_token **lst_head)
 
     }
     if (flag)
-        add_node(lst_head, line, start, i + 1);
+        add_node(lst_head, line, start, i);
    /*  else if (start != i)
         add_node(lst_head, line, start, i + 1); */
     return ;
@@ -148,14 +150,14 @@ int	quote_handler(char *cmdline, int i, t_token **lst_head)
 
 	printf("\n--- entered quote handler ---\n");
 	wdlen = strchr_wdlen(&cmdline[i], cmdline[i]);
-	printf("wdlen is: %d\n", wdlen);
 	if (wdlen)
 	{
 		int test = i + wdlen;
-		while (i < test)
-			printf("%c", cmdline[i++]);
+		int ii = i;
+		while (ii < test)
+			printf("%c", cmdline[ii++]);
 		printf("$\n\n");
-		//add_node(lst_head, cmdline, i, wdlen);
+		add_node(lst_head, cmdline, i, i + wdlen);
 		return (wdlen);
 	}
 	printf("skipped quote\n");
@@ -166,18 +168,13 @@ int	quote_handler(char *cmdline, int i, t_token **lst_head)
 void	final_lexer(char *cmdline, t_token **lst_head)
 {
 	int		i;
-	int		j;
+	int start;
 
 	i = 0;
-	j = 0;
-	int start;
 	while (cmdline[i])
 	{
 		if (cmdline[i] == 39 || cmdline[i] == 34)
-		{
 			i += quote_handler(cmdline, i, lst_head);
-			printf("i is %d\n", i);
-		}
 		else if (!ft_isspace(cmdline[i]))
 		{
 			start = i;
@@ -193,7 +190,8 @@ void	final_lexer(char *cmdline, t_token **lst_head)
 				else
 					i++;
 			}
-	        split_cmds(cmdline, start, i, lst_head);
+			if (i > start)
+	        	split_cmds(cmdline, start, i, lst_head);
 		}
 		while (ft_isspace(cmdline[i]) && cmdline[i])
             i++;
