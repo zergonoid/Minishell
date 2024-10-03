@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 11:01:56 by skioridi          #+#    #+#             */
-/*   Updated: 2024/09/16 18:28:38 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/17 19:26:26 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,10 @@ void    c_handler()
 int main(int ac, char **av, char **envp)
 {
     (void)av;
-    (void)envp;
     t_msh msh;
     int flag;
 
+    //msh->envp = envp;
     flag = 0;
     if ((ac != 1) || !envp[0] || !envp)
         ft_printf("Error: Exiting.\n");
