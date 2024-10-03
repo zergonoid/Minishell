@@ -6,7 +6,7 @@
 /*   By: msilva-c <msilva-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 16:20:27 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/25 16:37:25 by msilva-c         ###   ########.fr       */
+/*   Updated: 2024/10/03 13:10:39 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,13 @@ int add_node(t_token **lst_head, char *line, int i, int end)
     t_token *last;
 
     ft_printf("--- adding node ---\n");
-    ft_printf("i = %d, end = %d\n", i, end);
-    ft_printf("end - start(i) = %d\n", end - i);
-	char *substring = substr_new(line, i, end);
-	ft_printf("substring is: %s", substring);
-    ft_printf("$\nadded node\n");
-	free(substring);
-	return (end);
+    //ft_printf("i = %d, end = %d\n", i, end);
+    //ft_printf("end - start(i) = %d\n", end - i);
+	//char *substring = substr_new(line, i, end);
+	//ft_printf("substring is: %s", substring);
+    //ft_printf("$\nadded node\n");
+	//free(substring);
+	//return (end);
     t_token *newnode = tokenize(line, i, end);
     if (!*lst_head)
     {
