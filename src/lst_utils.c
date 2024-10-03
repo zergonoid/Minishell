@@ -37,6 +37,7 @@ t_token	*newtoken(char *content)
 	new->content = content;
     new->type = 0;
 	new->next = NULL;
+	new->prev = NULL;
 	ft_printf("New token: %s$\n", new->content);
 	return (new);
 }
@@ -44,9 +45,15 @@ t_token	*newtoken(char *content)
 t_token	*ft_tknlast(t_token *lst)
 {
 	if (!lst)
+	{
+		ft_printf("!lst\n");
 		return (NULL);
-	while (lst->next)
+	}
+	ft_printf("%s --- address is %p current->next is %p\n", lst->content, &lst, lst->next);
+	while (lst->next != NULL)
+	{
 		lst = lst->next;
+	}
 	return (lst);
 }
 

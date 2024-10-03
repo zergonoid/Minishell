@@ -72,6 +72,7 @@ void new_lexer(char *cmdline, t_token **lst_head);
 void	final_lexer(char *cmdline, t_token **lst_head);
 
 /* lst_utils.c */
+char	*substr_new(char const *s, unsigned int start, size_t len);
 void	ft_tknclear(t_token **lst);
 t_token	*newtoken(char *content);
 t_token	*ft_tknlast(t_token *lst);

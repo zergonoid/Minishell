@@ -6,7 +6,7 @@
 /*   By: msilva-c <msilva-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 11:01:56 by skioridi          #+#    #+#             */
-/*   Updated: 2024/09/20 18:21:21 by msilva-c         ###   ########.fr       */
+/*   Updated: 2024/09/23 16:22:29 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ bool    handleline(t_msh *msh)
 {
     if (msh->line)
     {
+        //ft_tknclear(msh->lst_head);
         free(msh->line);
         msh->line = (char *)NULL;
     }

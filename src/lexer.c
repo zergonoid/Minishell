@@ -6,18 +6,42 @@
 /*   By: msilva-c <msilva-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 16:20:27 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/20 19:56:33 by msilva-c         ###   ########.fr       */
+/*   Updated: 2024/09/25 16:37:25 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
+char	*substr_new(char const *s, unsigned int start, size_t len)
+{
+	char	*new;
+	size_t	cp_len;
+	size_t	i;
+
+	if (!s)
+		return (NULL);
+	if (start >= ft_strlen(s))
+		cp_len = 0;
+	else if (start != 0)
+		cp_len = len - start;
+	else
+		cp_len = len;
+	new = (char *)malloc(cp_len + 1);
+	if (!new)
+		return (NULL);
+	i = -1;
+	while (++i < cp_len)
+		new[i] = (char)s[start + i];
+	new[i] = 0;
+	return (new);
+}
+
 t_token *tokenize(char *str, int start, int wdlen)
 {
     t_token *a;
 
-    char *substring = ft_substr(str, start, wdlen);
-	printf("substring: %s\n", substring);
+    char *substring = substr_new(str, start, wdlen);
+	printf("substring is: %s\n", substring);
     a = newtoken(substring);
     a->type = findtype(substring); // sort type
     return (a);
@@ -27,23 +51,23 @@ int add_node(t_token **lst_head, char *line, int i, int end)
 {
     t_token *last;
 
-    printf("--- adding node ---\n");
-    printf("i = %d, end = %d\n", i, end);
-    while (i < end)
-    {
-        printf("%c", line[i]);
-        i++;
-    }
-    printf("$\nadded node\n");
-    return (end);
+    ft_printf("--- adding node ---\n");
+    ft_printf("i = %d, end = %d\n", i, end);
+    ft_printf("end - start(i) = %d\n", end - i);
+	char *substring = substr_new(line, i, end);
+	ft_printf("substring is: %s", substring);
+    ft_printf("$\nadded node\n");
+	free(substring);
+	return (end);
     t_token *newnode = tokenize(line, i, end);
-	//printf("is here\n");
     if (!*lst_head)
     {
+		ft_printf("is in !*lst_head\n");
         *lst_head = newnode;
         return (end);
     }
-    last = ft_tknlast(*lst_head);
+    last = ft_tknlast(*lst_head); //prob está aqui for sure
+	ft_printf("left ft_tknlast\n");
     last->next = newnode;
     newnode->prev = last;
     ft_tknadd_back(lst_head, newnode);
