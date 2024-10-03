@@ -1,24 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   header.h                                           :+:      :+:    :+:   */
+/*   ../header.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 22:50:42 by skioridi          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/09/17 19:12:39 by marvin           ###   ########.fr       */
+=======
+/*   Updated: 2024/09/18 18:48:39 by msilva-c         ###   ########.fr       */
+>>>>>>> b556715b32d0809e1ce9ff33d26fc65ecaf9c6ce
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./libft/libft.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <signal.h>
+
+#ifndef HEADER_H
+# define HEADER_H
+
+# include "./libft/libft.h"
+# include <stdio.h>
+# include <stdlib.h>
+# include <stdbool.h>
+# include <string.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <signal.h>
 
 #define MAXLINE 1024
 
@@ -36,21 +45,56 @@ typedef struct s_msh
 	int		exit;
 	int		ret;
 	t_token **lst_head;
+	char **env;
 }			t_msh;
 
 // types for node struct
 #define CMD 1
 #define PIPE 2
 #define REDIR 3
+<<<<<<< HEAD
 #define ENVVAR 4
 #define STR 5
 //#define  6
+=======
+#define QUOTE 4
+#define ENVVAR 5
+#define STR 6
+>>>>>>> b556715b32d0809e1ce9ff33d26fc65ecaf9c6ce
 
+/* env_utils.c */
+char **copy_matrix(char **src);
+
+/* init.c */
+t_msh    *init_all(t_msh *msh);
+
+/* free.c */
+void   free_and_exit(t_msh *msh);
+void	ft_free_matrix(char **matrix);
+
+/* lexer.c */
+int     findtype(char *s);
+t_token *tokenize(char *str, int start, int wdlen);
+int add_node(t_token **lst_head, char *line, int i, int j);
+int strchr_wdlen(const char *s, int c);
+void split_cmds(char *line, int i, int j, t_token **lst_head);
+void new_lexer(char *cmdline, t_token **lst_head);
+void	final_lexer(char *cmdline, t_token **lst_head);
+
+/* lst_utils.c */
+char	*substr_new(char const *s, unsigned int start, size_t len);
 void	ft_tknclear(t_token **lst);
 t_token	*newtoken(char *content);
 t_token	*ft_tknlast(t_token *lst);
+<<<<<<< HEAD
 void	ft_tknadd_back(t_token **lst, t_token *new);
 int lexer(char *cmdline, t_token **lst_head);
 int executor(t_msh *msh, char **envp);
 int quotehandle(t_token **tkn);
 int checkifenv(char *s);
+=======
+void	ft_tknadd_back(t_token **lst, t_token *newnode);
+int	quote_handler(char *cmdline, int i, t_token **lst_head);
+
+#endif
+>>>>>>> b556715b32d0809e1ce9ff33d26fc65ecaf9c6ce

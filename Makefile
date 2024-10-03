@@ -4,13 +4,17 @@ CC = cc
 
 #libs
 SRC_PATH =		./src/
+<<<<<<< HEAD
 SRC_FILES =		main.c lexer.c lst_stuff.c executor.c parser.c
+=======
+SRC_FILES =		env_utils.c free.c init.c lexer.c lst_utils.c main.c
+>>>>>>> b556715b32d0809e1ce9ff33d26fc65ecaf9c6ce
 SRC =			$(addprefix $(SRC_PATH), $(SRC_FILES))
 
 LIBFT_PATH =	./libft/
 LIBFT =			$(LIBFT_PATH)libft.a
 
-CFLAGS =		-Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS =		-g -fsanitize=address #-Wall -Wextra -Werror
 OTHERFLAGS =	-L$(LIBFT_PATH) -lft -lreadline -lasan -O3
 
 OBJ_DIR =		./obj/
@@ -28,14 +32,14 @@ $(OBJ_DIR)%.o: $(SRC_PATH)%.c
 	@$(CC) $(CFLAGS) $(INC_FLAGS) -c $< -o $@
 
 clean:
-	@rm -f $(OBJ_DIR)/* 
+	@rm -f $(OBJ_DIR)/*
 	@rm -fd obj/
 	@make clean -sC libft/
 
 fclean: clean
-	@rm -f $(NAME) 
+	@rm -f $(NAME)
 	@make fclean -sC libft/
 
-re: fclean all 
+re: fclean all
 
 .PHONY: all clean fclean re
