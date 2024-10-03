@@ -12,6 +12,21 @@
 
 #include "../header.h"
 
+int     findtype(char *s)
+{
+    if (!strncmp(s, "echo", ft_strlen(s)) || !strncmp(s, "pwd", ft_strlen(s)) || !strncmp(s, "export", ft_strlen(s)) \
+            || !strncmp(s, "cd", ft_strlen(s)) || !strncmp(s, "unset", ft_strlen(s)) || !strncmp(s, "env", ft_strlen(s)))
+        return (CMD);
+    else if (!strncmp(s, "|", ft_strlen(s)))
+        return (PIPE);
+    else if (!strncmp(s, ">", ft_strlen(s)) || !strncmp(s, "<", ft_strlen(s)) || !strncmp(s, ">>", ft_strlen(s)) \
+            || !strncmp(s, "<<", ft_strlen(s)))
+        return (REDIR);
+	else if (!strncmp(s, "$", ft_strlen(s)))
+		return (ENVVAR);
+    return (STR);
+}
+
 t_token	*newtoken(char *content)
 {
 	t_token	*new;
@@ -22,6 +37,7 @@ t_token	*newtoken(char *content)
 	new->content = content;
     new->type = 0;
 	new->next = NULL;
+	new->prev = NULL;
 	ft_printf("New token: %s$\n", new->content);
 	return (new);
 }
@@ -29,9 +45,15 @@ t_token	*newtoken(char *content)
 t_token	*ft_tknlast(t_token *lst)
 {
 	if (!lst)
+	{
+		ft_printf("!lst\n");
 		return (NULL);
-	while (lst->next)
+	}
+	ft_printf("%s --- address is %p current->next is %p\n", lst->content, &lst, lst->next);
+	while (lst->next != NULL)
+	{
 		lst = lst->next;
+	}
 	return (lst);
 }
 

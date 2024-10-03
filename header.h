@@ -50,7 +50,7 @@ typedef struct s_msh
 #define REDIR 3
 #define QUOTE 4
 #define ENVVAR 5
-//#define  6
+#define STR 6
 
 /* env_utils.c */
 char **copy_matrix(char **src);
@@ -62,11 +62,21 @@ t_msh    *init_all(t_msh *msh);
 void   free_and_exit(t_msh *msh);
 void	ft_free_matrix(char **matrix);
 
+/* lexer.c */
+int     findtype(char *s);
+t_token *tokenize(char *str, int start, int wdlen);
+int add_node(t_token **lst_head, char *line, int i, int j);
+int strchr_wdlen(const char *s, int c);
+void split_cmds(char *line, int i, int j, t_token **lst_head);
+void new_lexer(char *cmdline, t_token **lst_head);
+void	final_lexer(char *cmdline, t_token **lst_head);
+
+/* lst_utils.c */
+char	*substr_new(char const *s, unsigned int start, size_t len);
 void	ft_tknclear(t_token **lst);
 t_token	*newtoken(char *content);
 t_token	*ft_tknlast(t_token *lst);
 void	ft_tknadd_back(t_token **lst, t_token *newnode);
-int lexer(char *cmdline, t_token **lst_head);
-
+int	quote_handler(char *cmdline, int i, t_token **lst_head);
 
 #endif

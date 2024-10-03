@@ -6,7 +6,7 @@
 /*   By: msilva-c <msilva-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 11:01:56 by skioridi          #+#    #+#             */
-/*   Updated: 2024/09/18 19:32:46 by msilva-c         ###   ########.fr       */
+/*   Updated: 2024/09/23 16:22:29 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ bool    handleline(t_msh *msh)
 {
     if (msh->line)
     {
+        //ft_tknclear(msh->lst_head);
         free(msh->line);
         msh->line = (char *)NULL;
     }
@@ -23,12 +24,15 @@ bool    handleline(t_msh *msh)
     if (msh->line && *msh->line)
         add_history(msh->line);
     if (msh->line && !ft_strncmp(msh->line, "exit", ft_strlen(msh->line)))
-        msh->exit = 1;
+        return (1);
     else if (msh->line)
-        lexer(msh->line, msh->lst_head);
+    {
+        printf("\nfull cmdline: %s\n\n", msh->line);
+        final_lexer(msh->line, msh->lst_head);
+    }
     else
-        return (false);
-    return (true);
+        return (1);
+    return (0);
 }
 
 void    c_handler()
@@ -45,18 +49,16 @@ int main(int ac, char **av, char **envp)
 {
     (void)av;
     t_msh msh;
-    int flag;
 
     init_all(&msh);
     msh.env = copy_matrix(envp);
-    flag = true;
     if ((ac != 1) || !envp[0] || !envp)
         ft_printf("Error: Exiting.\n");
     signal(2, c_handler); //ctrl-C SIGINT
     signal(3, SIG_IGN); //ctrl-\ SIGQUIT
-    while (msh.exit == 0 && flag == true)
+    while (msh.exit == 0)
     {
-        flag = handleline(&msh);
+        msh.exit = handleline(&msh);
     }
     free_and_exit(&msh);
     return (msh.ret);

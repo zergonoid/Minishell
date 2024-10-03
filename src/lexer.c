@@ -6,91 +6,192 @@
 /*   By: msilva-c <msilva-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 16:20:27 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/18 19:12:36 by msilva-c         ###   ########.fr       */
+/*   Updated: 2024/09/25 16:37:25 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-int	makeword(const char *s)
+char	*substr_new(char const *s, unsigned int start, size_t len)
 {
-    int i = 0;
-    int len = 0;
+	char	*new;
+	size_t	cp_len;
+	size_t	i;
 
-
-    while (s[i] && !ft_isspace(s[i]))
-    {
-        if ((s[i] == '"' && strchr(&s[i + 1], '"')) || (s[i] == 39 && strchr(&s[i + 1], 39)))
-        {
-            i++;
-            while (s[i] != 39 && s[i] != '"')
-            {
-                i++;
-                len++;
-                ft_printf("is here\n");
-            }
-            len++;
-        }
-        else
-        {
-            len++;
-            i++;
-        }
-    }
-    return (len);
+	if (!s)
+		return (NULL);
+	if (start >= ft_strlen(s))
+		cp_len = 0;
+	else if (start != 0)
+		cp_len = len - start;
+	else
+		cp_len = len;
+	new = (char *)malloc(cp_len + 1);
+	if (!new)
+		return (NULL);
+	i = -1;
+	while (++i < cp_len)
+		new[i] = (char)s[start + i];
+	new[i] = 0;
+	return (new);
 }
 
-int     findtype(char *s)
-{
-    if (!strncmp(s, "echo", ft_strlen(s)) || !strncmp(s, "pwd", ft_strlen(s)) || !strncmp(s, "export", ft_strlen(s)) \
-            || !strncmp(s, "cd", ft_strlen(s)) || !strncmp(s, "unset", ft_strlen(s)) || !strncmp(s, "env", ft_strlen(s)))
-    {
-        ft_printf("CMD = %s\n", s);
-        return (CMD);
-    }
-    else if (!strncmp(s, "|", ft_strlen(s)))
-        return (PIPE);
-    else if (!strncmp(s, ">", ft_strlen(s)) || !strncmp(s, "<", ft_strlen(s)) || !strncmp(s, ">>", ft_strlen(s)) \
-            || !strncmp(s, "<<", ft_strlen(s)))
-        return (REDIR);
-    //else if (s[0] == '"' && s[ft_strlen(s)] == '"')
-    //else
-
-    // ft_putstr_fd(char *string_that_failed, int 2);
-    return (0);
-}
-
-t_token *tokenize(char *str, int wdlen)
+t_token *tokenize(char *str, int start, int wdlen)
 {
     t_token *a;
 
-    char *substring = ft_substr(str, 0, wdlen);
-
+    char *substring = substr_new(str, start, wdlen);
+	printf("substring is: %s\n", substring);
     a = newtoken(substring);
     a->type = findtype(substring); // sort type
     return (a);
 }
 
-int lexer(char *cmdline, t_token **lst_head)
+int add_node(t_token **lst_head, char *line, int i, int end)
 {
-    int i = 0;
-    int wdlen = 0;
-    t_token *newnode;
-    newnode = NULL;
+    t_token *last;
 
-    while (cmdline[i])
+    ft_printf("--- adding node ---\n");
+    ft_printf("i = %d, end = %d\n", i, end);
+    ft_printf("end - start(i) = %d\n", end - i);
+	char *substring = substr_new(line, i, end);
+	ft_printf("substring is: %s", substring);
+    ft_printf("$\nadded node\n");
+	free(substring);
+	return (end);
+    t_token *newnode = tokenize(line, i, end);
+    if (!*lst_head)
     {
-        while (ft_isspace(cmdline[i]) && cmdline[i]) //skip whitespace
-            i++;
-        if (cmdline[i])
+		ft_printf("is in !*lst_head\n");
+        *lst_head = newnode;
+        return (end);
+    }
+    last = ft_tknlast(*lst_head); //prob está aqui for sure
+	ft_printf("left ft_tknlast\n");
+    last->next = newnode;
+    newnode->prev = last;
+    ft_tknadd_back(lst_head, newnode);
+    return (end);
+}
+
+/* return value: nr of chars that later we'll copy
+   example:
+   cmdline = ola"adeus"ola
+   we sent cmdline[4] as parameter, and the ft will stop at cmdline[10]
+   ft_strchr will return 6 + 1, which is length of the word to tokenize*/
+
+int strchr_wdlen(const char *s, int c)
+{
+	int		i;
+
+	i = 1;
+	while (s[i])
+	{
+		if ((unsigned char)c == (unsigned char)s[i])
+			return (i + 1);
+		i++;
+	}
+	return (0);
+}
+
+void split_cmds(char *line, int i, int space, t_token **lst_head)
+{
+	int test = i;
+    printf("\n--- entered split_cmds ---\n");
+	//while (test < space)
+	//	printf("%c", line[test++]);
+	//printf("$\n");
+    //printf("\n--- starting to split ---\n");
+    int flag = 0;
+    int start = i;
+    while (line[i] && i < space)
+    {
+    	if (line[i] == '|' || line[i] == '>' || line[i] == '<')
         {
-            wdlen = makeword(&cmdline[i]);
-            ft_printf("wdlen:%d ", wdlen);
-            newnode = tokenize(&cmdline[i], wdlen);
-            ft_tknadd_back(lst_head, newnode);
-            i += wdlen; // check if it is an env variable
+            //printf("space is %d\ni is %d\nstart is %d\n", space, i, start);
+			//printf("line[i] = %c\n", line[i]);
+            if (i + 1 < space && line[i + 1] && line[i + 1] == line[i])
+            {
+				if (i > start)
+                	add_node(lst_head, line, start, i);
+                add_node(lst_head, line, i, i + 2);
+                i += 2;
+                flag = 0;
+                start = i;
+            }
+            else
+            {
+				if (i > start)
+                	add_node(lst_head, line, start, i);
+                add_node(lst_head, line, i, i + 1);
+                i += 1;
+                flag = 0;
+                start = i;
+
+            }
+        }
+        else
+        {
+            flag++;
+            i++;
         }
     }
-    //ft_printf("Whole command line: %s\n", cmdline);
-    return (0);
+    if (flag)
+        add_node(lst_head, line, start, i);
+    return ;
+}
+
+int	quote_handler(char *cmdline, int i, t_token **lst_head)
+{
+	int		wdlen;
+
+	printf("\n--- entered quote handler ---\n");
+	wdlen = strchr_wdlen(&cmdline[i], cmdline[i]);
+	if (wdlen)
+	{
+		//int test = i + wdlen;
+		//int ii = i;
+		//while (ii < test)
+		//	printf("%c", cmdline[ii++]);
+		//printf("$\n\n");
+		add_node(lst_head, cmdline, i, i + wdlen);
+		return (wdlen);
+	}
+	printf("skipped quote\n");
+	return (1);
+}
+
+
+void	final_lexer(char *cmdline, t_token **lst_head)
+{
+	int		i;
+	int start;
+
+	i = 0;
+	while (cmdline[i])
+	{
+		if (cmdline[i] == 39 || cmdline[i] == 34)
+			i += quote_handler(cmdline, i, lst_head);
+		else if (!ft_isspace(cmdline[i]))
+		{
+			start = i;
+			while (!ft_isspace(cmdline[i]) && cmdline[i])
+			{
+				if (cmdline[i] == 39 || cmdline[i] == 34)
+				{
+					if (i > start)
+						split_cmds(cmdline, start, i, lst_head);
+					i += quote_handler(cmdline, i, lst_head);
+					start = i;
+				}
+				else
+					i++;
+			}
+			if (i > start)
+	        	split_cmds(cmdline, start, i, lst_head);
+		}
+		while (ft_isspace(cmdline[i]) && cmdline[i])
+            i++;
+	}
+	return ;
 }
