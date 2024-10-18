@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msilva-c <msilva-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: skioridi <skioridi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 11:01:56 by skioridi          #+#    #+#             */
-/*   Updated: 2024/09/23 16:22:29 by msilva-c         ###   ########.fr       */
+/*   Updated: 2024/10/18 17:27:32 by skioridi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,31 +35,22 @@ bool    handleline(t_msh *msh)
     return (0);
 }
 
-void    c_handler()
-{
-    ft_printf("\n"); // Move to a new line
-    rl_on_new_line(); // Regenerate the prompt on a newline
-    rl_replace_line("", 0); // Clear the previous text
-    rl_redisplay();
-    return ;
-}
-
-
 int main(int ac, char **av, char **envp)
 {
     (void)av;
     t_msh msh;
 
+    if ((ac != 1))
+    {
+        ft_printf("Error: Exiting.\n");
+        exit(0);
+    }
     init_all(&msh);
     msh.env = copy_matrix(envp);
-    if ((ac != 1) || !envp[0] || !envp)
-        ft_printf("Error: Exiting.\n");
-    signal(2, c_handler); //ctrl-C SIGINT
-    signal(3, SIG_IGN); //ctrl-\ SIGQUIT
     while (msh.exit == 0)
     {
         msh.exit = handleline(&msh);
     }
     free_and_exit(&msh);
-    return (msh.ret);
+    return (0);
 }

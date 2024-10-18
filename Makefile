@@ -4,7 +4,7 @@ CC = cc
 
 #libs
 SRC_PATH =		./src/
-SRC_FILES =		env_utils.c free.c init.c lexer.c lst_utils.c main.c
+SRC_FILES =		env_utils.c free.c init.c lexer.c lst_utils.c main.c signals.c
 SRC =			$(addprefix $(SRC_PATH), $(SRC_FILES))
 
 LIBFT_PATH =	./libft/

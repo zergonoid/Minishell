@@ -56,6 +56,7 @@ typedef struct s_msh
 char **copy_matrix(char **src);
 
 /* init.c */
+void    signal_init(void);
 t_msh    *init_all(t_msh *msh);
 
 /* free.c */
