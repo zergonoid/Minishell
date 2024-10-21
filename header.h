@@ -24,13 +24,24 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <signal.h>
+# include <dirent.h> // directory stream
 
-#define MAXLINE 1024
+// defining all possible data types that we might have received
+typedef enum s_type
+{
+	PIPE = 1,
+	GREAT,
+	GREAT_GREAT,
+	LESS,
+	LESS_LESS,
+} t_type;
 
+// each token is a node in this struct
 typedef struct s_token
 {
 	char		*content;
-	int 		type;
+	t_type 		type; // type in enum
+	int			i; // index
 	struct s_token	*next;
 	struct s_token	*prev;
 }			t_token;
@@ -44,40 +55,51 @@ typedef struct s_msh
 	char **env;
 }			t_msh;
 
-// types for node struct
-#define CMD 1
-#define PIPE 2
-#define REDIR 3
-#define QUOTE 4
-#define ENVVAR 5
-#define STR 6
+typedef struct s_CMD
+{
+	char **s;
+	int (*builtin_find)(t_msh *, struct s_CMD *);
+	int redir_num;
+	/*
+	char *heredoc_file;
+	t_token *redirection; ????
+	*/
+	
+	struct s_CMD *next;
+	struct s_CMD *prev;
+} t_CMD;
+
+
+// FUNCTION DECLARATIONS
+// int     (*builtin_select(char *str))(t_msh *msh, t_CMD *command);
 
 /* env_utils.c */
 char **copy_matrix(char **src);
 
 /* init.c */
 void    signal_init(void);
-t_msh    *init_all(t_msh *msh);
+t_msh    *init_msh(t_msh *msh);
 
 /* free.c */
-void   free_and_exit(t_msh *msh);
+int		reset_msh(t_msh *msh);
 void	ft_free_matrix(char **matrix);
 
-/* lexer.c */
-int     findtype(char *s);
-t_token *tokenize(char *str, int start, int wdlen);
-int add_node(t_token **lst_head, char *line, int i, int j);
-int strchr_wdlen(const char *s, int c);
-void split_cmds(char *line, int i, int j, t_token **lst_head);
-void new_lexer(char *cmdline, t_token **lst_head);
-void	final_lexer(char *cmdline, t_token **lst_head);
+// LEXER
+
+t_type check_type(int c);
+int handle_types(char *str, int i, t_token **lst_head);
+int	quote_handler(char *str, int i, char c);
+int add_node(t_token **lst_head, char *substring, t_type type);
+int	skip_space(char *str, int i);
+int 	split_words(char *str, int i, t_token **lst_head);
+int	lexer(char *cmdline, t_token **lst_head);
 
 /* lst_utils.c */
-char	*substr_new(char const *s, unsigned int start, size_t len);
 void	ft_tknclear(t_token **lst);
-t_token	*newtoken(char *content);
-t_token	*ft_tknlast(t_token *lst);
+t_token	*newtoken(char *content, int type);
 void	ft_tknadd_back(t_token **lst, t_token *newnode);
-int	quote_handler(char *cmdline, int i, t_token **lst_head);
+
+int    handleline(t_msh *msh);
+
 
 #endif

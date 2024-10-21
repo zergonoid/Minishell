@@ -14,55 +14,55 @@
 
 int     findtype(char *s)
 {
-    if (!strncmp(s, "echo", ft_strlen(s)) || !strncmp(s, "pwd", ft_strlen(s)) || !strncmp(s, "export", ft_strlen(s)) \
+    /*
+	if (!strncmp(s, "echo", ft_strlen(s)) || !strncmp(s, "pwd", ft_strlen(s)) || !strncmp(s, "export", ft_strlen(s)) \
             || !strncmp(s, "cd", ft_strlen(s)) || !strncmp(s, "unset", ft_strlen(s)) || !strncmp(s, "env", ft_strlen(s)))
-        return (CMD);
-    else if (!strncmp(s, "|", ft_strlen(s)))
+        return ();
+	*/
+    if (!strncmp(s, "|", ft_strlen(s)))
         return (PIPE);
-    else if (!strncmp(s, ">", ft_strlen(s)) || !strncmp(s, "<", ft_strlen(s)) || !strncmp(s, ">>", ft_strlen(s)) \
-            || !strncmp(s, "<<", ft_strlen(s)))
-        return (REDIR);
-	else if (!strncmp(s, "$", ft_strlen(s)))
-		return (ENVVAR);
-    return (STR);
+    else if (!strncmp(s, ">", ft_strlen(s)))
+	    return (GREAT);
+	else if (!strncmp(s, ">>", ft_strlen(s)))
+	    return (GREAT_GREAT);
+    else if (!strncmp(s, "<", ft_strlen(s)))
+	    return (LESS);
+	else if (!strncmp(s, "<<", ft_strlen(s)))
+	    return (LESS_LESS);
+    return (0);
 }
 
-t_token	*newtoken(char *content)
+t_token	*newtoken(char *content, int type)
 {
 	t_token	*new;
+	static int 	i = 0; //index for tokens
 
 	new = (t_token *)malloc(sizeof(t_token));
 	if (!new)
 		return (NULL);
 	new->content = content;
-    new->type = 0;
+    new->type = type;
+	new->i = i++;
 	new->next = NULL;
 	new->prev = NULL;
 	ft_printf("New token: %s$\n", new->content);
 	return (new);
 }
 
-t_token	*ft_tknlast(t_token *lst)
-{
-	if (!lst)
-	{
-		ft_printf("!lst\n");
-		return (NULL);
-	}
-	ft_printf("%s --- address is %p current->next is %p\n", lst->content, &lst, lst->next);
-	while (lst->next != NULL)
-	{
-		lst = lst->next;
-	}
-	return (lst);
-}
-
 void	ft_tknadd_back(t_token **lst, t_token *newnode)
 {
+	t_token *tmp;
+
+	tmp = *lst;
 	if (!*lst)
+	{
 		*lst = newnode;
-	else
-		ft_tknlast(*lst)->next = newnode;
+		return ;
+	}
+	while (tmp->next != NULL)
+		tmp = tmp->next;
+	tmp->next = newnode;
+	newnode->prev = tmp;
 }
 
 void	ft_tknclear(t_token **lst)

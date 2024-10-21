@@ -6,13 +6,13 @@
 /*   By: skioridi <skioridi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 18:18:18 by msilva-c          #+#    #+#             */
-/*   Updated: 2024/10/18 17:24:56 by skioridi         ###   ########.fr       */
+/*   Updated: 2024/10/21 20:09:08 by skioridi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-t_msh    *init_all(t_msh *msh)
+t_msh    *init_msh(t_msh *msh)
 {
     signal_init();
     msh->line = (char *)malloc(sizeof(char));

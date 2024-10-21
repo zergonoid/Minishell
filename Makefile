@@ -2,34 +2,46 @@
 NAME = minishell
 CC = cc
 
-#libs
+#paths
 SRC_PATH =		./src/
-SRC_FILES =		env_utils.c free.c init.c lexer.c lst_utils.c main.c signals.c
+SRC_FILES =		main.c \
+				signals.c \
+				env_utils.c \
+				lst_utils.c \
+				free.c \
+				init.c \
+				lexer/lexer.c \
+				lexer/handlers.c \
+				builtins/builtin_select.c 
 SRC =			$(addprefix $(SRC_PATH), $(SRC_FILES))
 
 LIBFT_PATH =	./libft/
 LIBFT =			$(LIBFT_PATH)libft.a
 
-CFLAGS =		-g -fsanitize=address #-Wall -Wextra -Werror
-OTHERFLAGS =	-L$(LIBFT_PATH) -lft -lreadline -lasan -O3
+CFLAGS =		-Wall -Wextra -Werror -g #-fsanitize=address -lasan -O3
+RLFLAGS =		-lreadline -lhistory
+LFLAGS =		-L$(LIBFT_PATH) -lft
 
+LXR_DIR = 		./lexer/
+BLT_DIR	=		./builtins/
 OBJ_DIR =		./obj/
-OBJS =			$(SRC:$(SRC_PATH)%.c=$(OBJ_DIR)%.o)
+OBJS =			$(addprefix $(OBJ_DIR), $(patsubst $(SRC_PATH)%.c, %.o, $(SRC)))
 
 #rules
 all: $(NAME)
 
 $(NAME): $(OBJS)
 	@make -sC libft/
-	@$(CC) $(CFLAGS) $(OBJS) $(OTHERFLAGS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) $(RLFLAGS) $(LFLAGS) -o $(NAME)
 
 $(OBJ_DIR)%.o: $(SRC_PATH)%.c
 	@mkdir -p $(OBJ_DIR)
+	@mkdir -p $(OBJ_DIR)$(LXR_DIR)
+	@mkdir -p $(OBJ_DIR)$(BLT_DIR)
 	@$(CC) $(CFLAGS) $(INC_FLAGS) -c $< -o $@
 
 clean:
-	@rm -f $(OBJ_DIR)/*
-	@rm -fd obj/
+	@rm -rf $(OBJ_DIR)/*
 	@make clean -sC libft/
 
 fclean: clean

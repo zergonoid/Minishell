@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msilva-c <msilva-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: skioridi <skioridi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 18:17:41 by msilva-c          #+#    #+#             */
-/*   Updated: 2024/09/18 19:33:09 by msilva-c         ###   ########.fr       */
+/*   Updated: 2024/10/21 20:08:49 by skioridi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,14 @@ void	ft_free_matrix(char **matrix)
 }
 
 
-void    free_and_exit(t_msh *msh)
+int     reset_msh(t_msh *msh)
 {
     if (msh->line)
-    {
         free(msh->line);
-    }
     if (msh->lst_head)
-    {
         ft_tknclear(msh->lst_head);
-    }
     if (msh->env)
-    {
         ft_free_matrix(msh->env);
-    }
-    return ;
+    handleline(msh);
+    return (1);
 }
