@@ -6,7 +6,7 @@
 /*   By: skioridi <skioridi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 18:17:41 by msilva-c          #+#    #+#             */
-/*   Updated: 2024/10/22 18:47:43 by skioridi         ###   ########.fr       */
+/*   Updated: 2024/10/22 19:08:36 by skioridi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	ft_free_matrix(char **matrix)
 
 int     reset_msh(t_msh *msh)
 {
+    ft_printf("Test 4\n");
     clear_command_tables(&msh->cmd_tbl);
     free(msh->line);
     if (msh->pid)       // Don't know again why we do this here

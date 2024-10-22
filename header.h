@@ -104,9 +104,44 @@ typedef struct s_command_table
 // FUNCTION DECLARATIONS
 // int     (*builtin_select(char *str))(t_msh *msh, t_cmd *command);
 
+// BUILTINS
+int     (*builtin_select(char *str))(t_msh *msh, t_command_table *table);
+int 	builtin_cd(t_msh *msh, t_command_table *command);
+int 	builtin_echo(t_msh *msh, t_command_table *cmd);
+int 	builtin_export(t_msh *msh, t_command_table *cmd);
+int 	builtin_unset(t_msh *msh, t_command_table *cmd);
+int 	builtin_pwd(t_msh *msh, t_command_table *cmd);
+int		builtin_env(t_msh *msh, t_command_table *cmd);
+int		builtin_exit(t_msh *msh, t_command_table *cmd);
+
+// LEXER
+// handlers.c
+t_type	check_type(int c);
+int 	handle_types(char *str, int i, t_token **lst_head);
+int		quote_handler(char *str, int i, char c);
+// lexer.c
+int 	add_node(t_token **lst_head, char *substring, t_type type);
+int		skip_spaces(char *str, int i);
+int		split_words(char *str, int i, t_token **lst_head);
+int		lexer(char *cmdline, t_token **lst_head);
+
+// UTILS
+// envp_utils.c
+int     parse_envp(t_msh *msh);
+// gen_utils.c
+char	**copy_matrix(char **src);
+int		quote_verify(char *str);
+int		get_pwd(t_msh *msh);
+// lst_utils.c
+void	ft_tknclear(t_token **lst);
+t_token	*newtoken(char *content, int type);
+void	ft_tknadd_back(t_token **lst, t_token *newnode);
+// parser_utils.c
+void	count_pipes(t_token *lst_head, t_msh *msh);
+
 // init.c
-void    signal_init(void);
-t_msh    *init_msh(t_msh *msh);
+void	signal_init(void);
+t_msh	*init_msh(t_msh *msh);
 
 // error.c
 int ft_error(int errno, t_msh *msh);
@@ -116,41 +151,11 @@ void    clear_command_tables(t_command_table **lst);
 int		reset_msh(t_msh *msh);
 void	ft_free_matrix(char **matrix);
 
-// handlers.c
-t_type check_type(int c);
-int 	handle_types(char *str, int i, t_token **lst_head);
-int		quote_handler(char *str, int i, char c);
-
-// lexer.c
-int 	add_node(t_token **lst_head, char *substring, t_type type);
-int		skip_spaces(char *str, int i);
-int		split_words(char *str, int i, t_token **lst_head);
-int		lexer(char *cmdline, t_token **lst_head);
-
-// lst_utils.c
-void	ft_tknclear(t_token **lst);
-t_token	*newtoken(char *content, int type);
-void	ft_tknadd_back(t_token **lst, t_token *newnode);
-
-// envp_utils.c
-int     parse_envp(t_msh *msh);
-
-// gen_utils
-char **copy_matrix(char **src);
-int quote_verify(char *str);
-int get_pwd(t_msh *msh);
-
 // main.c
 int    handleline(t_msh *msh);
 
-//builtins.c
-int builtin_cd(t_msh *msh, t_command_table *command);
-int builtin_echo(t_msh *msh, t_command_table *cmd);
-int builtin_export(t_msh *msh, t_command_table *cmd);
-int builtin_unset(t_msh *msh, t_command_table *cmd);
-int builtin_pwd(t_msh *msh, t_command_table *cmd);
-int builtin_env(t_msh *msh, t_command_table *cmd);
-int builtin_exit(t_msh *msh, t_command_table *cmd);
-int     (*builtin_select(char *str))(t_msh *msh, t_command_table *table);
+
+// parser.c
+int parser(t_msh *msh);
 
 #endif

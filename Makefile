@@ -9,9 +9,11 @@ SRC_FILES =		main.c \
 				init.c \
 				error.c \
 				signals.c \
+				parser.c \
 				utils/gen_utils.c \
 				utils/envp_utils.c \
 				utils/lst_utils.c \
+				utils/parser_utils.c \
 				lexer/lexer.c \
 				lexer/handlers.c \
 				builtins/builtin_select.c \

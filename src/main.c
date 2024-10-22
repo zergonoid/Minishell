@@ -6,7 +6,7 @@
 /*   By: skioridi <skioridi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 11:01:56 by skioridi          #+#    #+#             */
-/*   Updated: 2024/10/22 18:17:17 by skioridi         ###   ########.fr       */
+/*   Updated: 2024/10/22 19:11:26 by skioridi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,20 @@ int    handleline(t_msh *msh)
     msh->line = temp;
     if (!msh->line)
     {
-        ft_printf("Exiting\n"); // I'm not understanding that part. Is this for exiting with ctrl-D when no input?
+        ft_printf("exit\n"); // Is this for exiting with ctrl-D when no input?
         exit(EXIT_SUCCESS);
     }
     if (msh->line[0] == '\0')
         return (reset_msh(msh));
     add_history(msh->line);
-
     if (!quote_verify(msh->line))
         return (ft_error(2, msh));
     if (!lexer(msh->line, &msh->lst_head))
         return (ft_error(3, msh));
-    // if (msh->line && !ft_strncmp(msh->line, "exit", ft_strlen(msh->line)))
-    //     return (1);
-    return (0);
+    parser(msh);
+
+    reset_msh(msh); // The reason I am crashing right here is that I have not initialized command tables at ALL! :)
+    return (1);
 }
 
 int main(int ac, char **av, char **envp)
@@ -47,12 +47,9 @@ int main(int ac, char **av, char **envp)
         ft_printf("Error: Please run without arguments.\n");
         exit(EXIT_SUCCESS);
     }
-    init_msh(&msh);
     msh.envp = copy_matrix(envp);
-    while (msh.exit == 0)
-    {
-        msh.exit = handleline(&msh);
-    }
-    reset_msh(&msh);
-    return (0);
+    get_pwd(&msh);
+    init_msh(&msh);
+    handleline(&msh);
+    return (EXIT_SUCCESS);
 }

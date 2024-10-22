@@ -6,13 +6,13 @@
 /*   By: skioridi <skioridi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 15:41:08 by skioridi          #+#    #+#             */
-/*   Updated: 2024/10/22 18:34:43 by skioridi         ###   ########.fr       */
+/*   Updated: 2024/10/22 19:10:18 by skioridi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header.h"
+#include "../../header.h" // DONE
 
-int builtin_pwd(t_msh *msh, t_command_table *cmd)
+int builtin_pwd(t_msh *msh, t_command_table *cmd) // NEED TO DO
 {
     (void)cmd;
     ft_putendl_fd(msh->pwd, STDOUT_FILENO);

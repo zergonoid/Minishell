@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: skioridi <skioridi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/25 17:07:16 by msilva-c          #+#    #+#             */
-/*   Updated: 2024/10/22 19:08:34 by skioridi         ###   ########.fr       */
+/*   Created: 2024/10/22 18:54:41 by skioridi          #+#    #+#             */
+/*   Updated: 2024/10/22 18:59:47 by skioridi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header.h"
+#include "../../header.h"
 
-int parser(t_msh *msh)
+void    count_pipes(t_token *lst_head, t_msh *msh)
 {
-    t_command_table *one;
-    t_parser        parser_struct;
+    t_token *temp;
 
-    (void)one;
-    (void)parser_struct;
-    msh->cmd_tbl = NULL;
-    count_pipes(msh->lst_head, msh); // Counts the no of pipes
-    if (msh->lst_head->type == PIPE)
-        return (1); // DOUBLE TOKEN ERROR??????? WHAT IS THIS
-    return (EXIT_SUCCESS); 
+    temp = lst_head;
+    msh->pipes = 0;
+    while (temp)
+    {
+        if (temp->type == PIPE)
+            msh->pipes++;
+        temp = temp->next;
+    }
 }
