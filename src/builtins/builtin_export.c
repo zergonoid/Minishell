@@ -1,25 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: skioridi <skioridi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/25 17:07:16 by msilva-c          #+#    #+#             */
-/*   Updated: 2024/10/22 17:10:13 by skioridi         ###   ########.fr       */
+/*   Created: 2024/10/22 15:41:06 by skioridi          #+#    #+#             */
+/*   Updated: 2024/10/22 15:41:06 by skioridi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header.h"
-
-int parser(t_msh *msh)
-{
-    t_command_table *one;
-    t_parser        p_tools;
-
-    msh->cmd_tbl = NULL;
-    //pipe_counter(msh->lst_head, msh); // Counts the no of pipes
-    if (msh->lst_head->type == PIPE)
-        ;
-
-}

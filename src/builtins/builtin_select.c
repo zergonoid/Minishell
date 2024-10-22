@@ -6,7 +6,7 @@
 /*   By: skioridi <skioridi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 17:46:56 by skioridi          #+#    #+#             */
-/*   Updated: 2024/10/21 19:32:00 by skioridi         ###   ########.fr       */
+/*   Updated: 2024/10/21 22:30:01 by skioridi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 int     (*builtin_select(char *str))(t_msh *msh, t_CMD *command)
 {
     static builtins[7][2] = {
-        {"echo", b_echo},
         {"cd", b_cd},
+        {"echo", b_echo},
         {"pwd", b_pwd},
         {"export", b_export},
         {"unset", b_unset},

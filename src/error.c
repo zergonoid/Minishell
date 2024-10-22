@@ -1,25 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: skioridi <skioridi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/25 17:07:16 by msilva-c          #+#    #+#             */
-/*   Updated: 2024/10/22 17:10:13 by skioridi         ###   ########.fr       */
+/*   Created: 2024/10/21 20:44:59 by skioridi          #+#    #+#             */
+/*   Updated: 2024/10/21 21:17:30 by skioridi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-int parser(t_msh *msh)
+int ft_error(int errno, t_msh *msh)
 {
-    t_command_table *one;
-    t_parser        p_tools;
-
-    msh->cmd_tbl = NULL;
-    //pipe_counter(msh->lst_head, msh); // Counts the no of pipes
-    if (msh->lst_head->type == PIPE)
-        ;
-
+    ft_putstr_fd("minishell: ", STDERR_FILENO);
+    if (errno == 1)
+        ft_putendl_fd("Error: 1 Something went wrong", STDERR_FILENO);
+    if (errno == 2)
+        ft_putendl_fd("Error: Unclosed quotes", STDERR_FILENO);
+    if (errno == 3)
+        ft_putendl_fd("Error: 3 Another thing went wrong", STDERR_FILENO);
+    reset_msh(msh);
+    return (EXIT_FAILURE);
 }

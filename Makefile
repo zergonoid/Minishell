@@ -5,11 +5,12 @@ CC = cc
 #paths
 SRC_PATH =		./src/
 SRC_FILES =		main.c \
-				signals.c \
-				env_utils.c \
-				lst_utils.c \
-				free.c \
+				reset_msh.c \
 				init.c \
+				error.c \
+				signals.c \
+				gen_utils.c \
+				lst_utils.c \
 				lexer/lexer.c \
 				lexer/handlers.c \
 				builtins/builtin_select.c 

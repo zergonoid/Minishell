@@ -26,7 +26,7 @@
 # include <signal.h>
 # include <dirent.h> // directory stream
 
-// defining all possible data types that we might have received
+// TYPE: Selection of type (|, >, >>, <, <<) for non-text token
 typedef enum s_type
 {
 	PIPE = 1,
@@ -36,69 +36,106 @@ typedef enum s_type
 	LESS_LESS,
 } t_type;
 
-// each token is a node in this struct
+// MSH: Master struct, tools for the whole program.
+typedef struct s_msh
+{
+	char		*line; 		// the line we've received in beginning
+	char		**paths;	// useful, from pipex, from what I remember. It's what madalena did 4 it
+	char		**envp;		// our copied version that we can alter
+
+	int			exit;		// my own invention, to exit the loop, but maybe we've resolved it
+
+	struct s_command_table *cmd_tbl; // link to the command tables
+	t_token 	*lst_head;
+
+	char		*pwd;
+	char		*old_pwd;
+
+	int			*pid; 		// important why? for when making child processes?
+	int 		pipes; 		// general number of pipes in program?
+
+	int			ret;
+	bool		heredoc; 	// This is for if we are inside a heredoc
+	bool		reset; 		// This is for if the struct has been reset (?)
+
+}			t_msh;
+
+// TOKENS : [lexer] - unformulated, unorganized, all tokens received
+// Delimiter for construction: 	SPACES (except when inside quotemarks)
 typedef struct s_token
 {
-	char		*content;
-	t_type 		type; // type in enum
-	int			i; // index
+	char		*content;	// either string content here (if word/command/string)
+	t_type 		type;		// or type in case of redir/pipe [as enum]
+	int			i;			// index of token
 	struct s_token	*next;
 	struct s_token	*prev;
 }			t_token;
 
-typedef struct s_msh
-{
-	char		*line;
-	int		exit;
-	int		ret;
-	t_token **lst_head;
-	char **env;
-}			t_msh;
 
-typedef struct s_CMD
+/* PARSER : [parser] - Organizes the info from TOKENS into the COMMAND TABLES*/
+typedef struct s_parser
 {
-	char **s;
-	int (*builtin_find)(t_msh *, struct s_CMD *);
-	int redir_num;
-	/*
-	char *heredoc_file;
-	t_token *redirection; ????
-	*/
+	t_token *lst_head;		// link to all tokens of lexer
+	t_token	*redirections;	// How does this work
+	int		redir_number;	// how many redirections
+
+	struct s_msh *msh;		// link to the master struct 
+
+}	t_parser;
+
+
+// COMMAND TABLES : [parser] - Organized, structured versions of commands
+// Includes redirections, infiles and outfiles, and other possibilities
+// Delimiter for construction: PIPES
+typedef struct s_command_table
+{
+	char	**arguments;
+	int		(*builtin_select)(t_msh *, struct s_command_table *);
 	
-	struct s_CMD *next;
-	struct s_CMD *prev;
-} t_CMD;
+	char	*heredoc_file;
+	t_token *redirections; // How does this one work? How is redirection a token
+	int		redir_number;
+	
+	struct s_command_table *next;
+	struct s_command_table *prev;
+} t_command_table;
 
 
 // FUNCTION DECLARATIONS
-// int     (*builtin_select(char *str))(t_msh *msh, t_CMD *command);
+// int     (*builtin_select(char *str))(t_msh *msh, t_cmd *command);
 
-/* env_utils.c */
-char **copy_matrix(char **src);
-
-/* init.c */
+// init.c
 void    signal_init(void);
 t_msh    *init_msh(t_msh *msh);
 
-/* free.c */
+// error.c
+int ft_error(int errno, t_msh *msh);
+
+// free.c
 int		reset_msh(t_msh *msh);
 void	ft_free_matrix(char **matrix);
 
-// LEXER
-
+// handlers.c
 t_type check_type(int c);
-int handle_types(char *str, int i, t_token **lst_head);
-int	quote_handler(char *str, int i, char c);
-int add_node(t_token **lst_head, char *substring, t_type type);
-int	skip_space(char *str, int i);
-int 	split_words(char *str, int i, t_token **lst_head);
-int	lexer(char *cmdline, t_token **lst_head);
+int 	handle_types(char *str, int i, t_token **lst_head);
+int		quote_handler(char *str, int i, char c);
 
-/* lst_utils.c */
+// lexer.c
+int 	add_node(t_token **lst_head, char *substring, t_type type);
+int		skip_spaces(char *str, int i);
+int		split_words(char *str, int i, t_token **lst_head);
+int		lexer(char *cmdline, t_token **lst_head);
+
+// lst_utils.c
 void	ft_tknclear(t_token **lst);
 t_token	*newtoken(char *content, int type);
 void	ft_tknadd_back(t_token **lst, t_token *newnode);
 
+// gen_utils
+int quote_verify(char *str);
+char **copy_matrix(char **src);
+
+// main.c
 int    handleline(t_msh *msh);
 
 

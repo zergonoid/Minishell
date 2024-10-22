@@ -1,30 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_utils.c                                        :+:      :+:    :+:   */
+/*   reset_msh.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: skioridi <skioridi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/18 17:01:39 by msilva-c          #+#    #+#             */
-/*   Updated: 2024/10/21 19:31:50 by skioridi         ###   ########.fr       */
+/*   Created: 2024/09/18 18:17:41 by msilva-c          #+#    #+#             */
+/*   Updated: 2024/10/22 17:09:11 by skioridi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-char **copy_matrix(char **src)
+void	ft_free_matrix(char **matrix)
 {
-    char **dst;
-    int i = 0;
+	int i;
 
-    while (src[i] != NULL)
-        i++;
-    dst = (char **)malloc(sizeof(char *) * (i + 1));
-	if (!dst)
-		return (NULL);
-    i = -1;
-    while (src[++i])
-        dst[i] = ft_strdup(src[i]);
-    dst[i] = NULL;
-    return (dst);
+	i = 0;
+	while (matrix[i])
+	{
+		free(matrix[i]);
+		i++;
+	}
+	free(matrix);
+}
+
+int     reset_msh(t_msh *msh)
+{
+    //if (msh->t_)
+    if (msh->line)
+        free(msh->line);
+    if (msh->lst_head)
+        ft_tknclear(msh->lst_head);
+    if (msh->envp)
+        ft_free_matrix(msh->envp);
+    init_msh(msh);
+    handleline(msh);
+    return (1);
 }
