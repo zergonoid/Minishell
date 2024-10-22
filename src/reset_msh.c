@@ -6,11 +6,33 @@
 /*   By: skioridi <skioridi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 18:17:41 by msilva-c          #+#    #+#             */
-/*   Updated: 2024/10/22 17:09:11 by skioridi         ###   ########.fr       */
+/*   Updated: 2024/10/22 18:47:43 by skioridi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
+
+void    clear_command_tables(t_command_table **lst)
+{
+    t_command_table *temp;
+    t_token         *redir_temp;
+
+    if (*lst)
+        return ;
+    while (*lst)
+    {
+        temp = (*lst)->next;
+        redir_temp = (*lst)->redirections;
+        ft_tknclear(&redir_temp);
+        if ((*lst)->arguments)
+            ft_free_matrix((*lst)->arguments);
+        if ((*lst)->heredoc_file)
+            free((*lst)->heredoc_file);
+        free(*lst);
+        *lst = temp;
+    }
+    *lst = NULL;
+}
 
 void	ft_free_matrix(char **matrix)
 {
@@ -27,14 +49,13 @@ void	ft_free_matrix(char **matrix)
 
 int     reset_msh(t_msh *msh)
 {
-    //if (msh->t_)
-    if (msh->line)
-        free(msh->line);
-    if (msh->lst_head)
-        ft_tknclear(msh->lst_head);
-    if (msh->envp)
-        ft_free_matrix(msh->envp);
+    clear_command_tables(&msh->cmd_tbl);
+    free(msh->line);
+    if (msh->pid)       // Don't know again why we do this here
+        free(msh->pid); // Which PID were we storing? / when?
+    ft_free_matrix(msh->paths);
     init_msh(msh);
+    msh->reset = true;
     handleline(msh);
     return (1);
 }

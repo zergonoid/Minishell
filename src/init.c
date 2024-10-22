@@ -6,7 +6,7 @@
 /*   By: skioridi <skioridi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 18:18:18 by msilva-c          #+#    #+#             */
-/*   Updated: 2024/10/22 17:09:28 by skioridi         ###   ########.fr       */
+/*   Updated: 2024/10/22 18:17:42 by skioridi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_msh    *init_msh(t_msh *msh)
     msh->line = (char *)malloc(sizeof(char));
     msh->exit = 0;
     msh->ret = 0;
-    msh->lst_head = (t_token **)malloc(sizeof(t_token *));
+    msh->lst_head = (t_token *)malloc(sizeof(t_token));
     msh->lst_head = NULL;
     msh->envp = NULL;
     return (msh);

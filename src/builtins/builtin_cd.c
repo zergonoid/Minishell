@@ -6,7 +6,7 @@
 /*   By: skioridi <skioridi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:09:54 by skioridi          #+#    #+#             */
-/*   Updated: 2024/10/21 22:29:28 by skioridi         ###   ########.fr       */
+/*   Updated: 2024/10/22 18:49:30 by skioridi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char *find_dir_path(char *s, t_msh *m)
     i = 0;
     while (m->envp[i])
     {
-        if (!strncmp(m->envp[i]), s, ft_strlen(s))
+        if (!strncmp(m->envp[i], s, ft_strlen(s)))
             return (ft_substr(m->envp[i], ft_strlen(s), ft_strlen(m->envp[i] - ft_strlen(s)))); // why is it that?
         i++;
     }
@@ -58,9 +58,9 @@ int builtin_cd(t_msh *msh, t_command_table *command)
 
     ret_val = 0;
     if (!command->arguments[1])
-        ret_val = set_dir_path("HOME=");
+        ret_val = set_dir_path(msh, "HOME=");
     else if (!ft_strncmp((command->arguments[1]), "-", 1))
-        ret_val = set_dir_path("OLDPWD=");
+        ret_val = set_dir_path(msh, "OLDPWD=");
     else
     {
         ret_val = chdir(command->arguments[1]);

@@ -6,11 +6,11 @@
 /*   By: skioridi <skioridi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 17:01:39 by msilva-c          #+#    #+#             */
-/*   Updated: 2024/10/22 17:09:41 by skioridi         ###   ########.fr       */
+/*   Updated: 2024/10/22 18:17:50 by skioridi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header.h"
+#include "../../header.h"
 
 char **copy_matrix(char **src)
 {
@@ -69,4 +69,20 @@ int quote_verify(char *str)
     if ((qq > 0 && qq % 2 != 0 ) || (q > 0 && q % 2 != 0))
         return (0); // odd number of quotes, error
     return (1); // passed our test, quotes are in pair number
+}
+
+int get_pwd(t_msh *msh)
+{
+    int i;
+
+    i = 0;
+    while (msh->envp[i])
+    {
+        if (!ft_strncmp(msh->envp[i], "PWD=", 4))
+            msh->pwd = ft_substr(msh->envp[i], 4, ft_strlen(msh->envp[i]) - 4);
+        if (!ft_strncmp(msh->envp[i], "OLDPWD=", 7))
+            msh->old_pwd = ft_substr(msh->envp[i], 7, ft_strlen(msh->envp[i]) - 7);
+        i++;      
+    }
+    return (1);
 }

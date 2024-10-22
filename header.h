@@ -46,7 +46,7 @@ typedef struct s_msh
 	int			exit;		// my own invention, to exit the loop, but maybe we've resolved it
 
 	struct s_command_table *cmd_tbl; // link to the command tables
-	t_token 	*lst_head;
+	struct s_token 	*lst_head;
 
 	char		*pwd;
 	char		*old_pwd;
@@ -111,7 +111,8 @@ t_msh    *init_msh(t_msh *msh);
 // error.c
 int ft_error(int errno, t_msh *msh);
 
-// free.c
+// reset_msh.c
+void    clear_command_tables(t_command_table **lst);
 int		reset_msh(t_msh *msh);
 void	ft_free_matrix(char **matrix);
 
@@ -131,12 +132,25 @@ void	ft_tknclear(t_token **lst);
 t_token	*newtoken(char *content, int type);
 void	ft_tknadd_back(t_token **lst, t_token *newnode);
 
+// envp_utils.c
+int     parse_envp(t_msh *msh);
+
 // gen_utils
-int quote_verify(char *str);
 char **copy_matrix(char **src);
+int quote_verify(char *str);
+int get_pwd(t_msh *msh);
 
 // main.c
 int    handleline(t_msh *msh);
 
+//builtins.c
+int builtin_cd(t_msh *msh, t_command_table *command);
+int builtin_echo(t_msh *msh, t_command_table *cmd);
+int builtin_export(t_msh *msh, t_command_table *cmd);
+int builtin_unset(t_msh *msh, t_command_table *cmd);
+int builtin_pwd(t_msh *msh, t_command_table *cmd);
+int builtin_env(t_msh *msh, t_command_table *cmd);
+int builtin_exit(t_msh *msh, t_command_table *cmd);
+int     (*builtin_select(char *str))(t_msh *msh, t_command_table *table);
 
 #endif

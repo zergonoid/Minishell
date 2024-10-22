@@ -6,7 +6,7 @@
 /*   By: skioridi <skioridi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 11:01:56 by skioridi          #+#    #+#             */
-/*   Updated: 2024/10/22 17:08:59 by skioridi         ###   ########.fr       */
+/*   Updated: 2024/10/22 18:17:17 by skioridi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int    handleline(t_msh *msh)
 
     if (!quote_verify(msh->line))
         return (ft_error(2, msh));
-    if (!lexer(msh->line, msh->lst_head))
+    if (!lexer(msh->line, &msh->lst_head))
         return (ft_error(3, msh));
     // if (msh->line && !ft_strncmp(msh->line, "exit", ft_strlen(msh->line)))
     //     return (1);

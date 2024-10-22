@@ -6,7 +6,7 @@
 /*   By: skioridi <skioridi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 17:46:56 by skioridi          #+#    #+#             */
-/*   Updated: 2024/10/21 22:30:01 by skioridi         ###   ########.fr       */
+/*   Updated: 2024/10/22 18:42:17 by skioridi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,17 @@
 
 // function to be used as function pointer, in order to call
 // the right function for each case, and get the builtin executed
-/*
 
-int     (*builtin_select(char *str))(t_msh *msh, t_CMD *command)
+int     (*builtin_select(char *str))(t_msh *msh, t_command_table *table)
 {
-    static builtins[7][2] = {
-        {"cd", b_cd},
-        {"echo", b_echo},
-        {"pwd", b_pwd},
-        {"export", b_export},
-        {"unset", b_unset},
-        {"env", b_env},
-        {"exit", b_exit}
+    static void *builtins[7][2] = {
+        {"cd", builtin_cd},
+        {"echo", builtin_echo},
+        {"pwd", builtin_pwd},
+        {"export", builtin_export},
+        {"unset", builtin_unset},
+        {"env", builtin_env},
+        {"exit", builtin_exit}
         };
         int i;
         
@@ -41,5 +40,3 @@ int     (*builtin_select(char *str))(t_msh *msh, t_CMD *command)
     }
     return (NULL);
 }
-
-*/
