@@ -151,6 +151,7 @@ t_token	*token_new(char *content, int type);
 void	token_addback(t_token **lst, t_token *newnode);
 void	token_delone(t_token **token, int index);
 // parser_utils.c
+int		count_arguments(t_token *lst_head);
 void	count_pipes(t_token *lst_head, t_msh *msh);
 // tbl_utils.c
 t_command_table *table_new(char **args, int redir_no, t_token *redirections);

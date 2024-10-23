@@ -6,29 +6,12 @@
 /*   By: skioridi <skioridi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 17:07:16 by msilva-c          #+#    #+#             */
-/*   Updated: 2024/10/23 20:15:21 by skioridi         ###   ########.fr       */
+/*   Updated: 2024/10/23 20:27:37 by skioridi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-int count_arguments(t_token *lst_head)
-{
-    t_token *temp;
-    int i;
-
-    if (!lst_head)
-        return (0);
-    i = 0;
-    temp = lst_head;
-    while (temp && temp->type != PIPE)
-    {
-        if (temp->i >= 0) // WHy do we do this check
-            i++;
-        temp = temp->next;
-    }
-    return (i);
-}
 
 t_command_table *initialize_table(t_parser *parser_struct)
 {
@@ -53,25 +36,38 @@ t_command_table *initialize_table(t_parser *parser_struct)
     return (table_new(arguments, parser_struct->redir_number, parser_struct->redirections));
 }
 
+t_parser initialize_parser_struct(t_token *lst_head, t_msh *msh)
+{
+    t_parser    parser_struct;
+
+    parser_struct.lst_head = lst_head;
+    parser_struct.redirections = NULL;
+    parser_struct.redir_number = 0;
+    parser_struct.msh = msh;
+    return (parser_struct);
+}
+
 int parser(t_msh *msh)
 {
     t_command_table *node;
     t_parser        parser_struct;
 
-    (void)node;
-    (void)parser_struct;
     msh->cmd_tbl = NULL;
     count_pipes(msh->lst_head, msh); // Counts the no of pipes
     ft_printf("Entering in parser\n");
     if (msh->lst_head->type == PIPE)
     {
-        ft_printf("pipes: %d\n", msh->pipes);
+        ft_printf("No of pipes: %d\n", msh->pipes);
         return (1); // DOUBLE TOKEN ERROR??????? WHAT IS THIS
     }
     while (msh->lst_head) // E isto que ta fodido
     {
         if (msh->lst_head && msh->lst_head->type == PIPE)
             token_delone(&msh->lst_head, msh->lst_head->i);
+        //if (handle_pipe_errors???????(msh, msh->lst_head->type))
+        //    return (EXIT_FAILURE);
+        parser_struct = initialize_parser_struct(msh->lst_head, msh);
+        ft_printf("No of redirections: %d\n", parser_struct.redir_number);
         node = initialize_table(&parser_struct);
         if (!node)
             ft_error(4, parser_struct.msh); // Parser_error?
@@ -80,6 +76,7 @@ int parser(t_msh *msh)
         else
             table_addback(&msh->cmd_tbl, node);
         msh->lst_head = parser_struct.lst_head;
+        break ; 
     }
     return (EXIT_SUCCESS); 
 }
