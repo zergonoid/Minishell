@@ -6,7 +6,7 @@
 /*   By: skioridi <skioridi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 16:20:27 by codespace         #+#    #+#             */
-/*   Updated: 2024/10/23 18:06:23 by skioridi         ###   ########.fr       */
+/*   Updated: 2024/10/23 20:10:38 by skioridi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ int add_node(t_token **lst_head, char *substring, t_type type)
 {
     t_token *node;
 
-    node = newtoken(substring, type);
+    node = token_new(substring, type);
 	if (!node)
 		return (0);
-	ft_tknadd_back(lst_head, node);
+	token_addback(lst_head, node);
 	return (1);
 }
 

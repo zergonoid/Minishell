@@ -6,11 +6,11 @@
 /*   By: skioridi <skioridi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:09:54 by skioridi          #+#    #+#             */
-/*   Updated: 2024/10/22 18:49:30 by skioridi         ###   ########.fr       */
+/*   Updated: 2024/10/23 20:06:53 by skioridi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header.h"
+#include "../../header.h" // DONE
 
 void    change_path(t_msh *msh)
 {

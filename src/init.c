@@ -6,7 +6,7 @@
 /*   By: skioridi <skioridi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 18:18:18 by msilva-c          #+#    #+#             */
-/*   Updated: 2024/10/23 18:21:10 by skioridi         ###   ########.fr       */
+/*   Updated: 2024/10/23 19:17:58 by skioridi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,13 @@
 int     init_msh(t_msh *msh)
 {
     msh->cmd_tbl = NULL;
-    msh->lst_head = (t_token *)malloc(sizeof(t_token));
     msh->lst_head = NULL;
-    msh->line = (char *)malloc(sizeof(char));
     msh->reset = false;
     msh->pid = NULL;
     msh->heredoc = false;
+    g_state.stop_heredoc = 0;
+    g_state.in_cmd = 0;
+    g_state.in_heredoc = 0;
     parse_envp(msh);
     signal_init();
     return (1);

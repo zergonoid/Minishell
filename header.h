@@ -26,7 +26,8 @@
 # include <signal.h>
 # include <dirent.h> // directory stream
 
-
+// Global struct, in order to handle more general feelings/problems
+// What exactly is the point of this/implementation?
 typedef struct s_state
 {
 	int		errno;
@@ -60,10 +61,10 @@ typedef struct s_msh
 	struct s_command_table *cmd_tbl; // link to the command tables
 	struct s_token 	*lst_head;
 
-	char		*pwd;
-	char		*old_pwd;
+	char		*pwd;		// store the pwd
+	char		*old_pwd;	// store the previous pwd
 
-	int			*pid; 		// important why? for when making child processes?
+	int			*pid; 		// child processes?
 	int 		pipes; 		// general number of pipes in program?
 
 	int			ret;
@@ -145,15 +146,20 @@ char	**copy_matrix(char **src);
 int		quote_verify(char *str);
 int		get_pwd(t_msh *msh);
 // lst_utils.c
-void	ft_tknclear(t_token **lst);
-t_token	*newtoken(char *content, int type);
-void	ft_tknadd_back(t_token **lst, t_token *newnode);
+void	token_clear(t_token **lst);
+t_token	*token_new(char *content, int type);
+void	token_addback(t_token **lst, t_token *newnode);
+void	token_delone(t_token **token, int index);
 // parser_utils.c
 void	count_pipes(t_token *lst_head, t_msh *msh);
+// tbl_utils.c
+t_command_table *table_new(char **args, int redir_no, t_token *redirections);
+void    table_addback(t_command_table **tbl_head, t_command_table *new);
+void    table_clear(t_command_table **tbl_head);
 
 // init.c
-void	signal_init(void);
 int     init_msh(t_msh *msh);
+int     prep(t_msh *msh);
 
 // error.c
 int ft_error(int errno, t_msh *msh);
@@ -165,6 +171,7 @@ void	ft_free_matrix(char **matrix);
 
 // signals.c
 void    q_handler(int sig);
+void	signal_init(void);
 
 // parser.c
 int parser(t_msh *msh);

@@ -6,7 +6,7 @@
 /*   By: skioridi <skioridi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 18:17:41 by msilva-c          #+#    #+#             */
-/*   Updated: 2024/10/23 18:09:56 by skioridi         ###   ########.fr       */
+/*   Updated: 2024/10/23 20:05:32 by skioridi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void    clear_command_tables(t_command_table **lst)
     {
         temp = (*lst)->next;
         redir_temp = (*lst)->redirections;
-        ft_tknclear(&redir_temp);
+        token_clear(&redir_temp);
         if ((*lst)->arguments)
             ft_free_matrix((*lst)->arguments);
         if ((*lst)->heredoc_file)

@@ -6,7 +6,7 @@
 /*   By: skioridi <skioridi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 11:01:56 by skioridi          #+#    #+#             */
-/*   Updated: 2024/10/23 18:24:48 by skioridi         ###   ########.fr       */
+/*   Updated: 2024/10/23 19:10:08 by skioridi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int    handleline(t_msh *msh)
     if (!lexer(msh->line, &msh->lst_head))
         return (ft_error(3, msh));
     parser(msh);
-
+    prep(msh);
     reset_msh(msh); // The reason I am crashing right here is that I have not initialized command tables at ALL! :)
     return (1);
 }

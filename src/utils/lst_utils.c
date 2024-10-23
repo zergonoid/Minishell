@@ -32,7 +32,7 @@ int     findtype(char *s)
     return (0);
 }
 
-t_token	*newtoken(char *content, int type)
+t_token	*token_new(char *content, int type)
 {
 	t_token	*new;
 	static int 	i = 0; //index for tokens
@@ -49,7 +49,7 @@ t_token	*newtoken(char *content, int type)
 	return (new);
 }
 
-void	ft_tknadd_back(t_token **lst, t_token *newnode)
+void	token_addback(t_token **lst, t_token *newnode)
 {
 	t_token *tmp;
 
@@ -65,7 +65,7 @@ void	ft_tknadd_back(t_token **lst, t_token *newnode)
 	newnode->prev = tmp;
 }
 
-void	ft_tknclear(t_token **lst)
+void	token_clear(t_token **lst)
 {
 	t_token	*temp;
 
@@ -86,4 +86,15 @@ void	ft_tknclear(t_token **lst)
 	free(*lst);
 	free(lst);
 	lst = NULL;
+}
+
+
+void	token_delone(t_token **token, int index)
+{
+	t_token *node;
+
+	(void)index;
+	(void)node;
+	free(token);
+	token = NULL;
 }

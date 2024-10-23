@@ -14,6 +14,7 @@ SRC_FILES =		main.c \
 				utils/envp_utils.c \
 				utils/lst_utils.c \
 				utils/parser_utils.c \
+				utils/tbl_utils.c \
 				lexer/lexer.c \
 				lexer/handlers.c \
 				builtins/builtin_select.c \
