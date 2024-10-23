@@ -6,11 +6,13 @@
 /*   By: skioridi <skioridi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 11:01:56 by skioridi          #+#    #+#             */
-/*   Updated: 2024/10/22 19:11:26 by skioridi         ###   ########.fr       */
+/*   Updated: 2024/10/23 18:24:48 by skioridi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
+
+t_state g_state;
 
 int    handleline(t_msh *msh)
 {

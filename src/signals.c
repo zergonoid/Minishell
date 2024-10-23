@@ -6,7 +6,7 @@
 /*   By: skioridi <skioridi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 17:21:44 by skioridi          #+#    #+#             */
-/*   Updated: 2024/10/21 20:19:25 by skioridi         ###   ########.fr       */
+/*   Updated: 2024/10/23 18:13:37 by skioridi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,12 @@
 int     event(void)
 {
     return (0);
+}
+void    q_handler(int sig)
+{
+    ft_putstr_fd("Quit: ", STDERR_FILENO);
+    ft_putnbr_fd(sig, STDERR_FILENO);
+    ft_putstr_fd("\n", STDERR_FILENO);
 }
 
 void    c_handler()

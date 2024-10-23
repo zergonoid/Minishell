@@ -26,6 +26,18 @@
 # include <signal.h>
 # include <dirent.h> // directory stream
 
+
+typedef struct s_state
+{
+	int		errno;
+	int		in_cmd;
+	int		in_heredoc;
+	int		stop_heredoc;
+
+}	t_state;
+
+extern t_state	g_state;
+
 // TYPE: Selection of type (|, >, >>, <, <<) for non-text token
 typedef enum s_type
 {
@@ -121,7 +133,7 @@ int 	handle_types(char *str, int i, t_token **lst_head);
 int		quote_handler(char *str, int i, char c);
 // lexer.c
 int 	add_node(t_token **lst_head, char *substring, t_type type);
-int		skip_spaces(char *str, int i);
+int		skip_space(char *str, int i);
 int		split_words(char *str, int i, t_token **lst_head);
 int		lexer(char *cmdline, t_token **lst_head);
 
@@ -141,7 +153,7 @@ void	count_pipes(t_token *lst_head, t_msh *msh);
 
 // init.c
 void	signal_init(void);
-t_msh	*init_msh(t_msh *msh);
+int     init_msh(t_msh *msh);
 
 // error.c
 int ft_error(int errno, t_msh *msh);
@@ -151,11 +163,13 @@ void    clear_command_tables(t_command_table **lst);
 int		reset_msh(t_msh *msh);
 void	ft_free_matrix(char **matrix);
 
-// main.c
-int    handleline(t_msh *msh);
-
+// signals.c
+void    q_handler(int sig);
 
 // parser.c
 int parser(t_msh *msh);
+
+// main.c
+int    handleline(t_msh *msh);
 
 #endif
