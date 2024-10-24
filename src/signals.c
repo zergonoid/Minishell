@@ -43,7 +43,16 @@ void    c_handler()
 
 void    signal_init(void)
 {
+    struct sigaction sa;
+    sigset_t    block_mask;
+
+    sigemptyset(&block_mask);
+    sa.sa_sigaction = event;
+    sa.sa_mask = block_mask;
+    sa.sa_flags = SA_SIGINFO;
     rl_event_hook = event;
+    (void)sa;
+    sigaction(SIGTSTP, &sa, event);
     signal(SIGINT, c_handler); //ctrl-C SIGINT
     signal(SIGQUIT, SIG_IGN); //ctrl-\ SIGQUIT
 }

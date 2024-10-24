@@ -35,8 +35,10 @@ typedef struct s_state
 	int		in_heredoc;
 	int		stop_heredoc;
 
-}	t_state;
-
+}	t_state; // CANNOT HAVE IT - find another way
+ // u can have global state integer - Create an enum for the 4 variables
+ // global is an integer - compare the integer to the enum values.
+ 
 extern t_state	g_state;
 
 // TYPE: Selection of type (|, >, >>, <, <<) for non-text token
